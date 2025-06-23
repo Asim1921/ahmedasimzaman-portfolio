@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  CodeBracketIcon, 
-  EyeIcon, 
+import {
+  CodeBracketIcon,
+  EyeIcon,
   CalendarIcon,
   UsersIcon,
   SparklesIcon,
@@ -99,6 +99,24 @@ const Projects: React.FC = () => {
       endDate: "2024-06",
       gradient: "from-blue-500 via-indigo-600 to-purple-700",
       glowColor: "blue"
+    },
+
+    {
+      id: 5,
+      title: "Social Media Backend API",
+      description: "A comprehensive REST API for a social media platform with authentication, posts, comments, likes, and real-time features.",
+      longDescription: "A full-featured social media backend built with Node.js and Express, featuring JWT authentication, MongoDB integration, file uploads, email services, and comprehensive middleware for security and validation. Includes features like posts with images, nested comments and replies, likes system, user profiles, password reset via OTP, and rate limiting.",
+      category: "backend",
+      technologies: ["Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "Bcrypt", "Nodemailer", "Cloudinary", "Multer"],
+      imageUrl: "/images/projects/social-media.png",
+      githubUrl: "https://github.com/Asim1921/social-media-frontend",
+      liveUrl: "https://social-media-frontend-rose.vercel.app/", 
+      featured: true,
+      status: "completed",
+      startDate: "2024-06-19",
+      endDate: "2024-06-24",
+      gradient: "from-green-500 via-emerald-600 to-teal-700",
+      glowColor: "green",
     }
   ];
 
@@ -109,8 +127,8 @@ const Projects: React.FC = () => {
     { id: 'mobile-app', label: 'Mobile Apps', icon: RocketLaunchIcon, count: projects.filter(p => p.category === 'mobile-app').length }
   ];
 
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
+  const filteredProjects = activeFilter === 'all'
+    ? projects
     : projects.filter(project => project.category === activeFilter);
 
   const getStatusColor = (status: string) => {
@@ -134,9 +152,9 @@ const Projects: React.FC = () => {
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
-        
+
         {/* Dynamic Orbs */}
-        <motion.div 
+        <motion.div
           className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
@@ -149,7 +167,7 @@ const Projects: React.FC = () => {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
           animate={{
             scale: [1.2, 1, 1.2],
@@ -166,7 +184,7 @@ const Projects: React.FC = () => {
       </div>
 
       {/* Mesh Grid */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `
@@ -201,7 +219,7 @@ const Projects: React.FC = () => {
                 Featured Projects
               </h2>
             </motion.div>
-            <motion.p 
+            <motion.p
               className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -213,7 +231,7 @@ const Projects: React.FC = () => {
           </div>
 
           {/* Enhanced Project Filter */}
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center gap-4 mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -224,11 +242,10 @@ const Projects: React.FC = () => {
               <motion.button
                 key={category.id}
                 onClick={() => setActiveFilter(category.id)}
-                className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border backdrop-blur-xl ${
-                  activeFilter === category.id
+                className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border backdrop-blur-xl ${activeFilter === category.id
                     ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white border-white/20 shadow-2xl shadow-purple-500/50'
                     : 'bg-black/30 text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
-                }`}
+                  }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
@@ -237,14 +254,13 @@ const Projects: React.FC = () => {
               >
                 <category.icon className="w-5 h-5" />
                 <span>{category.label}</span>
-                <span className={`px-2 py-1 text-xs rounded-full ${
-                  activeFilter === category.id 
-                    ? 'bg-white/20 text-white' 
+                <span className={`px-2 py-1 text-xs rounded-full ${activeFilter === category.id
+                    ? 'bg-white/20 text-white'
                     : 'bg-purple-500/20 text-purple-300'
-                }`}>
+                  }`}>
                   {category.count}
                 </span>
-                
+
                 {/* Glow effect */}
                 {activeFilter === category.id && (
                   <motion.div
@@ -260,7 +276,7 @@ const Projects: React.FC = () => {
 
           {/* Projects Grid */}
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={activeFilter}
               className="grid lg:grid-cols-2 gap-8"
               initial={{ opacity: 0, y: 20 }}
@@ -282,7 +298,7 @@ const Projects: React.FC = () => {
                 >
                   {/* Glow Effect */}
                   <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-20 group-hover:opacity-40 transition-all duration-500`}></div>
-                  
+
                   <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-500">
                     {/* Project Image */}
                     <div className="relative h-64 overflow-hidden">
@@ -294,10 +310,10 @@ const Projects: React.FC = () => {
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+hBOEdDCdMNvh/wg9v"
                       />
-                      
+
                       {/* Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                      
+
                       {/* Status Badge */}
                       <div className="absolute top-4 left-4">
                         <span className={`px-3 py-1 bg-gradient-to-r ${getStatusColor(project.status)} text-white text-xs font-semibold rounded-full shadow-lg`}>
@@ -356,7 +372,7 @@ const Projects: React.FC = () => {
                         <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-500">
                           {project.title}
                         </h3>
-                        
+
                         <p className="text-gray-400 leading-relaxed mb-4">
                           {project.description}
                         </p>
@@ -429,7 +445,7 @@ const Projects: React.FC = () => {
           </AnimatePresence>
 
           {/* View All Projects Button */}
-          <motion.div 
+          <motion.div
             className="text-center mt-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
