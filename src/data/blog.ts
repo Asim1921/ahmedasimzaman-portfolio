@@ -238,7 +238,7 @@ This guide covers implementation strategies, best practices, and real-world exam
     tags: ['react', 'nextjs', 'web-development', 'performance'],
     category: 'web-development',
     featured: false,
-    imageUrl: '/images/blog/nextjs-14.jpg',
+    imageUrl: '/images/blog/nextjs-14.png',
     views: 892,
     likes: 67
   },
