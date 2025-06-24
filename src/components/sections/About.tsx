@@ -33,7 +33,7 @@ const About: React.FC = () => {
       degree: "Bachelor's in Computer Science",
       institution: "University of Technology",
       period: "2020 - 2024",
-      gpa: "3.8/4.0",
+      gpa: "3.57/4.0",
       gradient: "from-blue-500 to-indigo-600",
       achievements: ["Dean's List", "Programming Excellence Award", "Final Year Project: AI-Powered System"]
     }
