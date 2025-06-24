@@ -31,7 +31,7 @@ const About: React.FC = () => {
   const education = [
     {
       degree: "Bachelor's in Computer Science",
-      institution: "University of Technology",
+      institution: "University of Engineering & Technology (UET Taxila) ",
       period: "2020 - 2024",
       gpa: "3.57/4.0",
       gradient: "from-blue-500 to-indigo-600",
