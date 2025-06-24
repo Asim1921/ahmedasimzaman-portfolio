@@ -13,7 +13,8 @@ import {
   BriefcaseIcon,
   CogIcon,
   ChatBubbleLeftRightIcon,
-  SparklesIcon
+  SparklesIcon,
+  DocumentTextIcon
 } from '@heroicons/react/24/outline';
 
 const Header: React.FC = () => {
@@ -79,35 +80,48 @@ const Header: React.FC = () => {
       href: '#hero', 
       icon: HomeIcon,
       section: 'hero',
-      glow: 'from-violet-400 via-purple-500 to-indigo-600'
+      glow: 'from-violet-400 via-purple-500 to-indigo-600',
+      type: 'scroll'
     },
     { 
       name: 'About', 
       href: '#about', 
       icon: UserIcon,
       section: 'about',
-      glow: 'from-emerald-400 via-teal-500 to-cyan-600'
+      glow: 'from-emerald-400 via-teal-500 to-cyan-600',
+      type: 'scroll'
     },
     { 
       name: 'Projects', 
       href: '#projects', 
       icon: BriefcaseIcon,
       section: 'projects',
-      glow: 'from-rose-400 via-pink-500 to-red-600'
+      glow: 'from-rose-400 via-pink-500 to-red-600',
+      type: 'scroll'
     },
     { 
       name: 'Skills', 
       href: '#skills', 
       icon: CogIcon,
       section: 'skills',
-      glow: 'from-amber-400 via-orange-500 to-yellow-600'
+      glow: 'from-amber-400 via-orange-500 to-yellow-600',
+      type: 'scroll'
+    },
+    { 
+      name: 'Blog', 
+      href: '/blog', 
+      icon: DocumentTextIcon,
+      section: 'blog',
+      glow: 'from-green-400 via-lime-500 to-emerald-600',
+      type: 'link'
     },
     { 
       name: 'Contact', 
       href: '#contact', 
       icon: ChatBubbleLeftRightIcon,
       section: 'contact',
-      glow: 'from-blue-400 via-indigo-500 to-purple-600'
+      glow: 'from-blue-400 via-indigo-500 to-purple-600',
+      type: 'scroll'
     },
   ];
 
@@ -189,8 +203,7 @@ const Header: React.FC = () => {
               className="relative group"
             >
               <Link 
-                href="#hero"
-                onClick={(e) => handleSmoothScroll(e, '#hero')}
+                href="/"
                 className="flex items-center space-x-4"
               >
                 {/* Multi-layered logo */}
@@ -247,37 +260,70 @@ const Header: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                   >
-                    <Link
-                      href={item.href}
-                      onClick={(e) => handleSmoothScroll(e, item.href)}
-                      className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-500 overflow-hidden ${
-                        activeSection === item.section
-                          ? 'text-white shadow-lg'
-                          : 'text-gray-300 hover:text-white'
-                      }`}
-                    >
-                      {/* Active background with morphing effect */}
-                      {activeSection === item.section && (
-                        <motion.div
-                          layoutId="activeNavBackground"
-                          className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl`}
-                          initial={false}
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
-                      )}
-                      
-                      {/* Hover glow effect */}
-                      <div className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl opacity-0 group-hover:opacity-20 transition-all duration-500`}></div>
-                      
-                      {/* Icon and text */}
-                      <item.icon className="w-4 h-4 relative z-10" />
-                      <span className="relative z-10 text-sm">{item.name}</span>
-                      
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                      </div>
-                    </Link>
+                    {item.type === 'link' ? (
+                      <Link
+                        href={item.href}
+                        className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-500 overflow-hidden ${
+                          activeSection === item.section
+                            ? 'text-white shadow-lg'
+                            : 'text-gray-300 hover:text-white'
+                        }`}
+                      >
+                        {/* Active background with morphing effect */}
+                        {activeSection === item.section && (
+                          <motion.div
+                            layoutId="activeNavBackground"
+                            className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl`}
+                            initial={false}
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        
+                        {/* Hover glow effect */}
+                        <div className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl opacity-0 group-hover:opacity-20 transition-all duration-500`}></div>
+                        
+                        {/* Icon and text */}
+                        <item.icon className="w-4 h-4 relative z-10" />
+                        <span className="relative z-10 text-sm">{item.name}</span>
+                        
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        </div>
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={(e) => handleSmoothScroll(e, item.href)}
+                        className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-500 overflow-hidden ${
+                          activeSection === item.section
+                            ? 'text-white shadow-lg'
+                            : 'text-gray-300 hover:text-white'
+                        }`}
+                      >
+                        {/* Active background with morphing effect */}
+                        {activeSection === item.section && (
+                          <motion.div
+                            layoutId="activeNavBackground"
+                            className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl`}
+                            initial={false}
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        
+                        {/* Hover glow effect */}
+                        <div className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl opacity-0 group-hover:opacity-20 transition-all duration-500`}></div>
+                        
+                        {/* Icon and text */}
+                        <item.icon className="w-4 h-4 relative z-10" />
+                        <span className="relative z-10 text-sm">{item.name}</span>
+                        
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        </div>
+                      </a>
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -347,33 +393,63 @@ const Header: React.FC = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                     >
-                      <Link
-                        href={item.href}
-                        onClick={(e) => handleSmoothScroll(e, item.href)}
-                        className={`group relative flex items-center gap-4 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border overflow-hidden ${
-                          activeSection === item.section
-                            ? `bg-gradient-to-r ${item.glow} text-white border-white/20 shadow-2xl`
-                            : 'text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
-                        }`}
-                      >
-                        {/* Icon container */}
-                        <div className={`p-2 rounded-xl bg-gradient-to-r ${item.glow} shadow-lg flex-shrink-0`}>
-                          <item.icon className="w-5 h-5 text-white" />
-                        </div>
-                        
-                        {/* Text */}
-                        <span className="text-lg flex-1">{item.name}</span>
-                        
-                        {/* Arrow indicator */}
-                        <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </div>
-                        
-                        {/* Shine effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                      </Link>
+                      {item.type === 'link' ? (
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`group relative flex items-center gap-4 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border overflow-hidden ${
+                            activeSection === item.section
+                              ? `bg-gradient-to-r ${item.glow} text-white border-white/20 shadow-2xl`
+                              : 'text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          {/* Icon container */}
+                          <div className={`p-2 rounded-xl bg-gradient-to-r ${item.glow} shadow-lg flex-shrink-0`}>
+                            <item.icon className="w-5 h-5 text-white" />
+                          </div>
+                          
+                          {/* Text */}
+                          <span className="text-lg flex-1">{item.name}</span>
+                          
+                          {/* Arrow indicator */}
+                          <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </div>
+                          
+                          {/* Shine effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          onClick={(e) => handleSmoothScroll(e, item.href)}
+                          className={`group relative flex items-center gap-4 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border overflow-hidden ${
+                            activeSection === item.section
+                              ? `bg-gradient-to-r ${item.glow} text-white border-white/20 shadow-2xl`
+                              : 'text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          {/* Icon container */}
+                          <div className={`p-2 rounded-xl bg-gradient-to-r ${item.glow} shadow-lg flex-shrink-0`}>
+                            <item.icon className="w-5 h-5 text-white" />
+                          </div>
+                          
+                          {/* Text */}
+                          <span className="text-lg flex-1">{item.name}</span>
+                          
+                          {/* Arrow indicator */}
+                          <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </div>
+                          
+                          {/* Shine effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                        </a>
+                      )}
                     </motion.div>
                   ))}
                   
