@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,7 +19,7 @@ const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       id: 1,
       title: "EventEase",
@@ -100,7 +100,6 @@ const Projects: React.FC = () => {
       gradient: "from-blue-500 via-indigo-600 to-purple-700",
       glowColor: "blue"
     },
-
     {
       id: 5,
       title: "Social Media Backend",
@@ -117,75 +116,99 @@ const Projects: React.FC = () => {
       endDate: "2024-06-24",
       gradient: "from-green-500 via-emerald-600 to-teal-700",
       glowColor: "green",
+    },
+    {
+      id: 6,
+      title: "CRM System",
+      description: "A comprehensive Customer Relationship Management system with advanced analytics, automation, and multi-channel communication.",
+      longDescription: "Enterprise-grade CRM system featuring lead management, sales pipeline tracking, customer analytics, automated workflows, email marketing integration, and real-time reporting dashboards. Built with microservices architecture for scalability.",
+      category: "web-app",
+      technologies: ["React", "Node.js", "PostgreSQL", "Redis", "Socket.io", "Chart.js", "SendGrid", "AWS S3"],
+      imageUrl: "/images/projects/communication.png",
+      githubUrl: "https://github.com/ahmedasimzaman/Communication.png",
+      liveUrl: "https://www.crmama.com.mx/",
+      featured: true,
+      status: "completed",
+      startDate: "2024-01",
+      endDate: "2024-04",
+      metrics: {
+        users: "1000+",
+        performance: "99.5% uptime",
+        impact: "Increased sales efficiency by 45%"
+      },
+      gradient: "from-orange-500 via-red-600 to-pink-700",
+      glowColor: "orange"
     }
-  ];
+  ], []);
 
-  const categories = [
+  const categories = useMemo(() => [
     { id: 'all', label: 'All Projects', icon: SparklesIcon, count: projects.length },
     { id: 'web-app', label: 'Web Apps', icon: CodeBracketIcon, count: projects.filter(p => p.category === 'web-app').length },
     { id: 'ai-app', label: 'AI Projects', icon: ChartBarIcon, count: projects.filter(p => p.category === 'ai-app').length },
-    { id: 'mobile-app', label: 'Mobile Apps', icon: RocketLaunchIcon, count: projects.filter(p => p.category === 'mobile-app').length }
-  ];
+    { id: 'backend', label: 'Backend', icon: RocketLaunchIcon, count: projects.filter(p => p.category === 'backend').length }
+  ], [projects]);
 
-  const filteredProjects = activeFilter === 'all'
-    ? projects
-    : projects.filter(project => project.category === activeFilter);
+  const filteredProjects = useMemo(() => 
+    activeFilter === 'all'
+      ? projects
+      : projects.filter(project => project.category === activeFilter),
+    [activeFilter, projects]
+  );
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = useCallback((status: string) => {
     switch (status) {
       case 'completed': return 'from-green-500 to-emerald-600';
       case 'in-progress': return 'from-yellow-500 to-orange-600';
       default: return 'from-blue-500 to-indigo-600';
     }
-  };
+  }, []);
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = useCallback((status: string) => {
     switch (status) {
       case 'completed': return 'Completed';
       case 'in-progress': return 'In Progress';
       default: return 'Planned';
     }
+  }, []);
+
+  // Optimized animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
   };
 
   return (
     <section id="projects" className="relative py-32 bg-black overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-30">
+      {/* Simplified Background */}
+      <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
-
-        {/* Dynamic Orbs */}
-        <motion.div
-          className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.5, 0.3],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3
-          }}
-        />
+        
+        {/* Reduced animation complexity */}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Mesh Grid */}
+      {/* Static Grid Pattern */}
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `
             linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
@@ -197,18 +220,18 @@ const Projects: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
           className="max-w-7xl mx-auto"
         >
           {/* Section Header */}
           <div className="text-center mb-20">
             <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
               className="inline-flex items-center gap-3 mb-8"
             >
@@ -221,9 +244,9 @@ const Projects: React.FC = () => {
             </motion.div>
             <motion.p
               className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
             >
               A showcase of innovative applications built to solve real-world problems and create meaningful digital impact
@@ -233,24 +256,24 @@ const Projects: React.FC = () => {
           {/* Enhanced Project Filter */}
           <motion.div
             className="flex flex-wrap justify-center gap-4 mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
             {categories.map((category, index) => (
               <motion.button
                 key={category.id}
                 onClick={() => setActiveFilter(category.id)}
-                className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border backdrop-blur-xl ${activeFilter === category.id
+                className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl font-semibold transition-all duration-300 border backdrop-blur-xl ${activeFilter === category.id
                     ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white border-white/20 shadow-2xl shadow-purple-500/50'
                     : 'bg-black/30 text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
                   }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.05 }}
               >
                 <category.icon className="w-5 h-5" />
                 <span>{category.label}</span>
@@ -260,16 +283,6 @@ const Projects: React.FC = () => {
                   }`}>
                   {category.count}
                 </span>
-
-                {/* Glow effect */}
-                {activeFilter === category.id && (
-                  <motion.div
-                    layoutId="categoryGlow"
-                    className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl blur opacity-50"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </motion.button>
             ))}
           </motion.div>
@@ -279,36 +292,36 @@ const Projects: React.FC = () => {
             <motion.div
               key={activeFilter}
               className="grid lg:grid-cols-2 gap-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
             >
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  variants={itemVariants}
                   className="group relative"
                   onMouseEnter={() => setHoveredProject(project.id)}
                   onMouseLeave={() => setHoveredProject(null)}
-                  whileHover={{ y: -10 }}
+                  whileHover={{ y: -5 }}
                 >
                   {/* Glow Effect */}
-                  <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-20 group-hover:opacity-40 transition-all duration-500`}></div>
+                  <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-20 group-hover:opacity-30 transition-all duration-300`}></div>
 
-                  <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-500">
+                  <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl group-hover:shadow-purple-500/20 transition-all duration-300">
                     {/* Project Image */}
                     <div className="relative h-64 overflow-hidden">
                       <Image
                         src={project.imageUrl}
                         alt={project.title}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+hBOEdDCdMNvh/wg9v"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 2}
                       />
 
                       {/* Overlay */}
@@ -334,9 +347,9 @@ const Projects: React.FC = () => {
                       <AnimatePresence>
                         {hoveredProject === project.id && (
                           <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                             className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm"
                           >
                             <div className="flex gap-4">
@@ -344,9 +357,9 @@ const Projects: React.FC = () => {
                                 href={project.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 bg-white/20 backdrop-blur-xl rounded-full text-white hover:bg-white/30 transition-all duration-300 border border-white/20"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
+                                className="p-3 bg-white/20 backdrop-blur-xl rounded-full text-white hover:bg-white/30 transition-all duration-200 border border-white/20"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                               >
                                 <CodeBracketIcon className="w-6 h-6" />
                               </motion.a>
@@ -354,9 +367,9 @@ const Projects: React.FC = () => {
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 bg-white/20 backdrop-blur-xl rounded-full text-white hover:bg-white/30 transition-all duration-300 border border-white/20"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
+                                className="p-3 bg-white/20 backdrop-blur-xl rounded-full text-white hover:bg-white/30 transition-all duration-200 border border-white/20"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                               >
                                 <PlayIcon className="w-6 h-6" />
                               </motion.a>
@@ -369,7 +382,7 @@ const Projects: React.FC = () => {
                     {/* Project Content */}
                     <div className="p-8 space-y-6">
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-500">
+                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-300">
                           {project.title}
                         </h3>
 
@@ -417,7 +430,7 @@ const Projects: React.FC = () => {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 px-4 py-3 bg-black/30 backdrop-blur-xl text-gray-300 rounded-xl border border-white/10 hover:border-white/20 hover:text-white transition-all duration-300 text-center text-sm font-medium group/btn"
+                          className="flex-1 px-4 py-3 bg-black/30 backdrop-blur-xl text-gray-300 rounded-xl border border-white/10 hover:border-white/20 hover:text-white transition-all duration-200 text-center text-sm font-medium group/btn"
                         >
                           <span className="flex items-center justify-center gap-2">
                             <CodeBracketIcon className="w-4 h-4 group-hover/btn:text-violet-400 transition-colors" />
@@ -428,13 +441,13 @@ const Projects: React.FC = () => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`flex-1 px-4 py-3 bg-gradient-to-r ${project.gradient} text-white rounded-xl hover:shadow-lg transition-all duration-300 text-center text-sm font-medium group/btn overflow-hidden relative`}
+                          className={`flex-1 px-4 py-3 bg-gradient-to-r ${project.gradient} text-white rounded-xl hover:shadow-lg transition-all duration-200 text-center text-sm font-medium group/btn overflow-hidden relative`}
                         >
                           <span className="relative z-10 flex items-center justify-center gap-2">
                             <EyeIcon className="w-4 h-4" />
                             Live Demo
                           </span>
-                          <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left"></div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left"></div>
                         </a>
                       </div>
                     </div>
@@ -447,21 +460,21 @@ const Projects: React.FC = () => {
           {/* View All Projects Button */}
           <motion.div
             className="text-center mt-16"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             viewport={{ once: true }}
           >
             <Link
               href="/projects"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white font-bold rounded-2xl shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/70 transition-all duration-500 border border-white/10 overflow-hidden"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white font-bold rounded-2xl shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/70 transition-all duration-300 border border-white/10 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
               <span className="relative z-10">View All Projects</span>
-              <svg className="relative z-10 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="relative z-10 w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
             </Link>
           </motion.div>
         </motion.div>
