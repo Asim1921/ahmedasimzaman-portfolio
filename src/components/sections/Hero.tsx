@@ -164,7 +164,7 @@ const Hero: React.FC = () => {
                 {/* Image */}
                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl shadow-purple-500/50 group-hover:shadow-purple-400/70 transition-all duration-500">
                   <Image
-                    src="/images/profile.jpg"
+                    src="/images/dp.jpg"
                     alt="Ahmed Asim Zaman"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"

@@ -138,7 +138,25 @@ const Projects: React.FC = () => {
       },
       gradient: "from-orange-500 via-red-600 to-pink-700",
       glowColor: "orange"
-    }
+    },
+
+    {
+      id: 7,
+      title: "Smart Parking System",
+      description: "A smart parking system that uses RFID technology to manage parking spaces and vehicles.",
+      longDescription: "A smart parking system that uses RFID technology to manage parking spaces and vehicles. It uses a Raspberry Pi to read the RFID tags and a server to store the data.",
+      category: "web-app",
+      technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MongoDB", "Raspberry Pi", "RFID", "Server"],
+      imageUrl: "/images/projects/portfolio.png",
+      githubUrl: "https://github.com/Asim1921/ahmedasimzaman-portfolio",
+      liveUrl: "https://ahmedasimzaman-portfolio.vercel.app/",
+      featured: false,
+      status: "completed",
+      startDate: "2024-06",
+      endDate: "2024-06",
+      gradient: "from-blue-500 via-indigo-600 to-purple-700",
+      glowColor: "blue"
+    },
   ], []);
 
   const categories = useMemo(() => [
