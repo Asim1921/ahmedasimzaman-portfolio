@@ -15,7 +15,8 @@ const PerformanceMonitor: React.FC = () => {
         if (entry.entryType === 'largest-contentful-paint') {
           console.log('LCP:', entry.startTime);
         } else if (entry.entryType === 'first-input') {
-          console.log('FID:', entry.processingStart - entry.startTime);
+          const fidEntry = entry as PerformanceEventTiming;
+          console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
         } else if (entry.entryType === 'layout-shift') {
           console.log('CLS:', (entry as any).value);
         }
