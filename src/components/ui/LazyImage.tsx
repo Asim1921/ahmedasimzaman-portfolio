@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 
 interface LazyImageProps {
   src: string;
@@ -10,7 +10,7 @@ interface LazyImageProps {
   fill?: boolean;
   sizes?: string;
   priority?: boolean;
-  placeholder?: string;
+  placeholder?: ImageProps['placeholder'];
   blurDataURL?: string;
   onLoad?: () => void;
   onError?: () => void;
