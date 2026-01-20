@@ -15,6 +15,8 @@ module.exports = {
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
+        'gradient': 'gradient 8s linear infinite',
+        'spin': 'spin 2s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -24,6 +26,14 @@ module.exports = {
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        gradient: {
+          '0%, 100%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
         },
       },
     },

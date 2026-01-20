@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cell Ripple Animation */
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+/* Shooting Stars Animation */
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--translate-x, 300px), var(--translate-y, 300px)) scale(1);
+  }
+}
+
 /* Custom CSS Variables */
 :root {
   --foreground-rgb: 255, 255, 255;

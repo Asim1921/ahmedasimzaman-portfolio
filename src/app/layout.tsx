@@ -4,6 +4,8 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PerformanceMonitor from '@/components/ui/PerformanceMonitor';
+import ShootingStars from '@/components/ui/ShootingStars';
+import BackgroundRipple from '@/components/ui/BackgroundRipple';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -94,10 +96,12 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       </head>
-      <body className={`${inter.className} antialiased bg-black`}>
+      <body className={`${inter.className} antialiased bg-black relative overflow-x-hidden`}>
         <PerformanceMonitor />
+        <ShootingStars />
+        <BackgroundRipple />
         <Header />
-        <main className="relative">
+        <main className="relative z-10">
           {children}
         </main>
         <Footer />
