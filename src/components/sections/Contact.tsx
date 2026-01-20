@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Button } from '@/components/ui/moving-border';
+import { Card, CardTitle, CardDescription } from '@/components/ui/modern-card';
 import { 
   EnvelopeIcon, 
   PhoneIcon, 
@@ -81,7 +83,6 @@ const Contact: React.FC = () => {
       href: 'mailto:asimzaman2000@gmail.com',
       description: 'Send me an email anytime',
       gradient: 'from-cyan-500 to-blue-600',
-      glow: 'shadow-cyan-500/50'
     },
     {
       icon: PhoneIcon,
@@ -90,7 +91,6 @@ const Contact: React.FC = () => {
       href: 'tel:+923405735723',
       description: 'Available Mon-Fri, 9AM-6PM',
       gradient: 'from-green-500 to-emerald-600',
-      glow: 'shadow-green-500/50'
     },
     {
       icon: MapPinIcon,
@@ -99,7 +99,6 @@ const Contact: React.FC = () => {
       href: '#',
       description: 'Open to remote opportunities',
       gradient: 'from-purple-500 to-pink-600',
-      glow: 'shadow-purple-500/50'
     }
   ];
 
@@ -113,7 +112,6 @@ const Contact: React.FC = () => {
         </svg>
       ),
       gradient: 'from-gray-700 to-gray-900',
-      glow: 'shadow-gray-800/50'
     },
     {
       name: 'LinkedIn',
@@ -124,7 +122,6 @@ const Contact: React.FC = () => {
         </svg>
       ),
       gradient: 'from-blue-500 to-blue-700',
-      glow: 'shadow-blue-600/50'
     },
     {
       name: 'Twitter',
@@ -135,14 +132,12 @@ const Contact: React.FC = () => {
         </svg>
       ),
       gradient: 'from-blue-400 to-cyan-500',
-      glow: 'shadow-blue-500/50'
     },
     {
       name: 'Website',
       url: 'https://ahmedasimzaman.com',
       icon: <GlobeAltIcon className="w-6 h-6" />,
       gradient: 'from-violet-500 to-purple-600',
-      glow: 'shadow-violet-500/50'
     }
   ];
 
@@ -152,7 +147,6 @@ const Contact: React.FC = () => {
       <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
         
-        {/* Communication Orbs */}
         <motion.div 
           className="absolute top-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
           animate={{
@@ -183,18 +177,6 @@ const Contact: React.FC = () => {
           }}
         />
       </div>
-
-      {/* Communication Grid */}
-      <div 
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-        }}
-      ></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -232,7 +214,7 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16">
-            {/* Left Column - Contact Information */}
+            {/* Left Column - Contact Information with Modern Cards */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -256,26 +238,25 @@ const Contact: React.FC = () => {
                   <motion.a
                     key={index}
                     href={info.href}
-                    className="group relative block"
+                    className="block"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <div className={`absolute -inset-1 bg-gradient-to-r ${info.gradient} rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-500`}></div>
-                    <div className="relative flex items-center p-6 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 shadow-xl group-hover:shadow-2xl transition-all duration-500">
-                      <div className={`flex-shrink-0 w-14 h-14 bg-gradient-to-r ${info.gradient} rounded-xl flex items-center justify-center ${info.glow} group-hover:shadow-2xl transition-all duration-500 mr-6`}>
-                        <info.icon className="w-7 h-7 text-white" />
+                    <Card className="p-6 hover:border-violet-500/50 transition-all duration-500">
+                      <div className="flex items-center gap-4">
+                        <div className={`flex-shrink-0 w-14 h-14 bg-gradient-to-r ${info.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
+                          <info.icon className="w-7 h-7 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-lg mb-1">{info.label}</CardTitle>
+                          <CardDescription className="text-white font-medium mb-1">{info.value}</CardDescription>
+                          <CardDescription className="text-sm">{info.description}</CardDescription>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h4 className="text-xl font-bold text-white mb-1 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-500">
-                          {info.label}
-                        </h4>
-                        <p className="text-gray-300 font-medium mb-1">{info.value}</p>
-                        <p className="text-sm text-gray-400">{info.description}</p>
-                      </div>
-                    </div>
+                    </Card>
                   </motion.a>
                 ))}
               </div>
@@ -286,51 +267,52 @@ const Contact: React.FC = () => {
                   <SparklesIcon className="w-5 h-5 text-violet-400" />
                   Connect With Me
                 </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={index}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative"
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                       viewport={{ once: true }}
                       whileHover={{ scale: 1.05, y: -5 }}
                     >
-                      <div className={`absolute -inset-1 bg-gradient-to-r ${social.gradient} rounded-2xl blur opacity-30 group-hover:opacity-50 transition-opacity duration-500`}></div>
-                      <div className={`relative w-full h-16 bg-gradient-to-r ${social.gradient} rounded-2xl flex items-center justify-center text-white shadow-xl ${social.glow} group-hover:shadow-2xl transition-all duration-500 border border-white/10`}>
-                        {social.icon}
-                      </div>
+                      <Card className={`p-4 bg-gradient-to-r ${social.gradient} text-white border-0 hover:shadow-2xl transition-all duration-500`}>
+                        <div className="flex items-center justify-center">
+                          {social.icon}
+                        </div>
+                      </Card>
                     </motion.a>
                   ))}
                 </div>
               </div>
 
-              {/* Availability Status */}
+              {/* Availability Status Card */}
               <motion.div
-                className="p-6 bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-2xl border border-green-500/20 backdrop-blur-xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1 }}
                 viewport={{ once: true }}
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="relative">
-                    <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
-                    <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping opacity-75"></div>
+                <Card className="p-6 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-green-500/20">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="relative">
+                      <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
+                      <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping opacity-75"></div>
+                    </div>
+                    <span className="text-green-400 font-bold text-lg">Available for Work</span>
                   </div>
-                  <span className="text-green-400 font-bold text-lg">Available for Work</span>
-                </div>
-                <p className="text-gray-300">
-                  Currently open to new opportunities and exciting projects. Let's discuss how I can help bring your ideas to life.
-                </p>
-                <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
-                  <ClockIcon className="w-4 h-4" />
-                  <span>Response time: Within 24 hours</span>
-                </div>
+                  <CardDescription className="text-white mb-4">
+                    Currently open to new opportunities and exciting projects. Let's discuss how I can help bring your ideas to life.
+                  </CardDescription>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <ClockIcon className="w-4 h-4" />
+                    <span>Response time: Within 24 hours</span>
+                  </div>
+                </Card>
               </motion.div>
             </motion.div>
 
@@ -342,10 +324,7 @@ const Contact: React.FC = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Form Glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-3xl blur opacity-20"></div>
-              
-              <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+              <Card className="p-8">
                 <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                   <PaperAirplaneIcon className="w-6 h-6 text-violet-400" />
                   Send me a message
@@ -381,52 +360,48 @@ const Contact: React.FC = () => {
                       <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-3">
                         Name *
                       </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          id="name"
-                          {...register('name')}
-                          className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
-                            errors.name ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
-                          }`}
-                          placeholder="Your full name"
-                        />
-                        {errors.name && (
-                          <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="mt-2 text-sm text-red-400"
-                          >
-                            {errors.name.message}
-                          </motion.p>
-                        )}
-                      </div>
+                      <input
+                        type="text"
+                        id="name"
+                        {...register('name')}
+                        className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
+                          errors.name ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
+                        }`}
+                        placeholder="Your full name"
+                      />
+                      {errors.name && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="mt-2 text-sm text-red-400"
+                        >
+                          {errors.name.message}
+                        </motion.p>
+                      )}
                     </div>
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-3">
                         Email *
                       </label>
-                      <div className="relative">
-                        <input
-                          type="email"
-                          id="email"
-                          {...register('email')}
-                          className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
-                            errors.email ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
-                          }`}
-                          placeholder="your.email@example.com"
-                        />
-                        {errors.email && (
-                          <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="mt-2 text-sm text-red-400"
-                          >
-                            {errors.email.message}
-                          </motion.p>
-                        )}
-                      </div>
+                      <input
+                        type="email"
+                        id="email"
+                        {...register('email')}
+                        className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
+                          errors.email ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
+                        }`}
+                        placeholder="your.email@example.com"
+                      />
+                      {errors.email && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="mt-2 text-sm text-red-400"
+                        >
+                          {errors.email.message}
+                        </motion.p>
+                      )}
                     </div>
                   </div>
 
@@ -435,26 +410,24 @@ const Contact: React.FC = () => {
                     <label htmlFor="subject" className="block text-sm font-semibold text-gray-300 mb-3">
                       Subject *
                     </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        id="subject"
-                        {...register('subject')}
-                        className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
-                          errors.subject ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
-                        }`}
-                        placeholder="What's this about?"
-                      />
-                      {errors.subject && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="mt-2 text-sm text-red-400"
-                        >
-                          {errors.subject.message}
-                        </motion.p>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      id="subject"
+                      {...register('subject')}
+                      className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 text-white placeholder-gray-500 ${
+                        errors.subject ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
+                      }`}
+                      placeholder="What's this about?"
+                    />
+                    {errors.subject && (
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-2 text-sm text-red-400"
+                      >
+                        {errors.subject.message}
+                      </motion.p>
+                    )}
                   </div>
 
                   {/* Message */}
@@ -462,64 +435,46 @@ const Contact: React.FC = () => {
                     <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-3">
                       Message *
                     </label>
-                    <div className="relative">
-                      <textarea
-                        id="message"
-                        rows={6}
-                        {...register('message')}
-                        className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 resize-vertical text-white placeholder-gray-500 ${
-                          errors.message ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
-                        }`}
-                        placeholder="Tell me about your project or just say hello!"
-                      />
-                      {errors.message && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="mt-2 text-sm text-red-400"
-                        >
-                          {errors.message.message}
-                        </motion.p>
-                      )}
-                    </div>
+                    <textarea
+                      id="message"
+                      rows={6}
+                      {...register('message')}
+                      className={`w-full px-4 py-4 bg-black/30 backdrop-blur-xl border rounded-2xl focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-300 resize-vertical text-white placeholder-gray-500 ${
+                        errors.message ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 hover:border-white/20'
+                      }`}
+                      placeholder="Tell me about your project or just say hello!"
+                    />
+                    {errors.message && (
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-2 text-sm text-red-400"
+                      >
+                        {errors.message.message}
+                      </motion.p>
+                    )}
                   </div>
 
-                  {/* Submit Button */}
-                  <motion.button
+                  {/* Submit Button with Moving Border */}
+                  <Button
+                    as="button"
                     type="submit"
                     disabled={isSubmitting}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                    className={`group relative w-full py-4 px-6 rounded-2xl font-bold text-white transition-all duration-500 overflow-hidden ${
-                      isSubmitting
-                        ? 'bg-gray-600 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-700 hover:via-purple-700 hover:to-indigo-700 shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/70'
-                    }`}
+                    borderRadius="1.75rem"
+                    className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
                   >
-                    {/* Animated background */}
-                    {!isSubmitting && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center gap-3">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Sending Message...
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-3">
+                        <PaperAirplaneIcon className="w-5 h-5" />
+                        Send Message
+                      </span>
                     )}
-                    
-                    <span className="relative z-10 flex items-center justify-center gap-3">
-                      {isSubmitting ? (
-                        <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                          Sending Message...
-                        </>
-                      ) : (
-                        <>
-                          <PaperAirplaneIcon className="w-5 h-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                          Send Message
-                        </>
-                      )}
-                    </span>
-                    
-                    {/* Shine effect */}
-                    {!isSubmitting && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                    )}
-                  </motion.button>
+                  </Button>
                 </form>
 
                 {/* Form Footer */}
@@ -528,7 +483,7 @@ const Contact: React.FC = () => {
                     Your information is secure and will never be shared. I typically respond within 24 hours.
                   </p>
                 </div>
-              </div>
+              </Card>
             </motion.div>
           </div>
 
@@ -540,16 +495,16 @@ const Contact: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="max-w-2xl mx-auto p-8 bg-gradient-to-r from-violet-900/20 via-purple-900/20 to-indigo-900/20 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
+            <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-r from-violet-900/20 via-purple-900/20 to-indigo-900/20">
               <SparklesIcon className="w-12 h-12 text-violet-400 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <CardTitle className="text-2xl mb-4">
                 Let's Build Something Amazing Together
-              </h3>
-              <p className="text-gray-300 leading-relaxed">
+              </CardTitle>
+              <CardDescription className="text-gray-300 leading-relaxed">
                 Whether it's a cutting-edge web application, a mobile solution, or an innovative idea that needs technical expertise, 
                 I'm here to help turn your vision into reality.
-              </p>
-            </div>
+              </CardDescription>
+            </Card>
           </motion.div>
         </motion.div>
       </div>

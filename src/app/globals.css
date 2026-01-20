@@ -15,21 +15,7 @@
   }
 }
 
-/* Shooting Stars Animation */
-@keyframes shoot {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0);
-  }
-  10% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(var(--translate-x, 300px), var(--translate-y, 300px)) scale(1);
-  }
-}
+/* Shooting Stars Animation - handled inline in component */
 
 /* Custom CSS Variables */
 :root {

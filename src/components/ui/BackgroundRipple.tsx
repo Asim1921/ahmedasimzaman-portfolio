@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface BackgroundRippleProps {
@@ -17,8 +17,15 @@ const BackgroundRipple: React.FC<BackgroundRippleProps> = ({
   numberOfCircles = 8,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -59,7 +66,11 @@ const BackgroundRipple: React.FC<BackgroundRippleProps> = ({
 
     window.addEventListener('mousemove', handleMouseMove);
 
+    let animationFrameId: number | null = null;
+    
     const animate = () => {
+      if (!ctx || !canvas) return;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = circles.length - 1; i >= 0; i--) {
@@ -88,16 +99,23 @@ const BackgroundRipple: React.FC<BackgroundRippleProps> = ({
         ctx.stroke();
       }
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [mainCircleSize, mainCircleOpacity, numberOfCircles]);
+  }, [mainCircleSize, mainCircleOpacity, numberOfCircles, mounted]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <canvas
