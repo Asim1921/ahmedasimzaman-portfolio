@@ -26,7 +26,8 @@ export function Button({
   borderClassName?: string;
   duration?: number;
   className?: string;
-} & React.HTMLAttributes<HTMLElement>) {
+} & React.HTMLAttributes<HTMLElement> &
+  React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <Component
       className={cn(
@@ -78,7 +79,7 @@ export const MovingBorder = ({
   duration?: number;
   rx?: string;
   ry?: string;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+} & React.SVGProps<SVGSVGElement>) => {
   const pathRef = useRef<any>();
   const progress = useMotionValue<number>(0);
 
