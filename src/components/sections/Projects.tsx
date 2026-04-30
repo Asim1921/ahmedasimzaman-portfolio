@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { Carousel, Card as ProjectCard } from '@/components/ui/apple-cards-carousel';
 import { motion } from 'framer-motion';
-import { CodeBracketIcon, EyeIcon, RocketLaunchIcon, SparklesIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import Image from 'next/image';
+import { RocketLaunchIcon } from '@heroicons/react/24/outline';
 
 const Projects: React.FC = () => {
   const projects = useMemo(() => [
@@ -16,39 +15,23 @@ const Projects: React.FC = () => {
       longDescription: "EventEase revolutionizes event management with AI-powered scheduling, automated notifications, and seamless payment integration. Built with modern microservices architecture.",
       technologies: ["React", "Node.js", "MongoDB", "Express", "Stripe API", "Socket.io"],
       imageUrl: "/images/projects/EaseUsPlatform.png",
-      githubUrl: "https://github.com/ahmedasimzaman/eventease",
-      liveUrl: "https://eventease-demo.com",
       featured: true,
       status: "completed",
       gradient: "from-violet-500 via-purple-600 to-indigo-700",
     },
     {
       id: 2,
-      category: "Community Platform",
-      title: "VolunteerMe",
-      description: "A platform connecting volunteers with organizations, making community service more accessible and impactful.",
-      longDescription: "VolunteerMe uses machine learning to match volunteers with opportunities based on skills, location, and interests. Features real-time chat and impact tracking.",
-      technologies: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "WebRTC"],
-      imageUrl: "/images/projects/volunteerME.png",
-      githubUrl: "https://github.com/ahmedasimzaman/volunteerme",
-      liveUrl: "https://volunteerme-demo.com",
+      category: "Local Commerce",
+      title: "Clickgoffer",
+      description:
+        "A fullstack web platform for local commerce that replaces conventional full prepayment vouchers with a split-payment reservation model.",
+      longDescription:
+        "Clickgoffer is a fullstack platform for local commerce that replaces conventional full prepayment vouchers with a split-payment reservation model — reserve with a small deposit and pay the remaining balance later.",
+      technologies: ["React", "TypeScript", "MongoDB", "Node.js"],
+      imageUrl: "/images/projects/Clickgoffer.jpeg",
       featured: true,
       status: "completed",
-      gradient: "from-emerald-500 via-teal-600 to-cyan-700",
-    },
-    {
-      id: 3,
-      category: "AI Application",
-      title: "Mental Health Chatbot",
-      description: "An AI-powered chatbot providing mental health support and resources with empathetic conversation capabilities.",
-      longDescription: "Advanced NLP-powered chatbot with sentiment analysis, crisis detection, and personalized therapy recommendations. Integrated with licensed therapist network.",
-      technologies: ["Python", "OpenAI API", "React", "FastAPI", "Docker", "TensorFlow"],
-      imageUrl: "/images/projects/mental-wellness.png",
-      githubUrl: "https://github.com/Asim1921/mental-wellness-chatbot",
-      liveUrl: "https://mental-wellness-chatbot.vercel.app/",
-      featured: true,
-      status: "in-progress",
-      gradient: "from-rose-500 via-pink-600 to-purple-700",
+      gradient: "from-amber-500 via-orange-600 to-rose-700",
     },
     {
       id: 4,
@@ -58,8 +41,6 @@ const Projects: React.FC = () => {
       longDescription: "A showcase of modern web development featuring glassmorphism, advanced animations, and performance optimization. Built as a template for developers.",
       technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MongoDB"],
       imageUrl: "/images/projects/portfolio.png",
-      githubUrl: "https://github.com/Asim1921/ahmedasimzaman-portfolio",
-      liveUrl: "https://ahmedasimzaman-portfolio.vercel.app/",
       featured: false,
       status: "completed",
       gradient: "from-blue-500 via-indigo-600 to-purple-700",
@@ -67,13 +48,11 @@ const Projects: React.FC = () => {
     {
       id: 5,
       category: "Backend API",
-      title: "Social Media Backend",
+      title: "Vibely",
       description: "A comprehensive REST API for a social media platform with authentication, posts, comments, likes, and real-time features.",
       longDescription: "A full-featured social media backend built with Node.js and Express, featuring JWT authentication, MongoDB integration, file uploads, email services, and comprehensive middleware for security and validation.",
       technologies: ["Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "Bcrypt", "Nodemailer", "Cloudinary"],
       imageUrl: "/images/projects/social-media.png",
-      githubUrl: "https://github.com/Asim1921/social-media-frontend",
-      liveUrl: "https://social-media-frontend-rose.vercel.app/",
       featured: true,
       status: "completed",
       gradient: "from-green-500 via-emerald-600 to-teal-700",
@@ -86,72 +65,11 @@ const Projects: React.FC = () => {
       longDescription: "Enterprise-grade CRM system featuring lead management, sales pipeline tracking, customer analytics, automated workflows, email marketing integration, and real-time reporting dashboards.",
       technologies: ["React", "Node.js", "PostgreSQL", "Redis", "Socket.io", "Chart.js", "SendGrid", "AWS S3"],
       imageUrl: "/images/projects/communication.png",
-      githubUrl: "https://github.com/ahmedasimzaman/Communication.png",
-      liveUrl: "https://www.crmama.com.mx/",
       featured: true,
       status: "completed",
       gradient: "from-orange-500 via-red-600 to-pink-700",
     },
   ], []);
-
-  const projectCards = projects.map((project) => (
-    <ProjectCard
-      key={project.id}
-      card={{
-        category: project.category,
-        title: project.title,
-        src: project.imageUrl,
-        content: (
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
-              <p className="text-gray-300 leading-relaxed mb-6">{project.longDescription}</p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold text-white mb-3">Technologies</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className={`px-3 py-1.5 bg-gradient-to-r ${project.gradient} bg-opacity-20 text-white text-sm rounded-full border border-white/10 backdrop-blur-xl`}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex gap-4 pt-4">
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 px-4 py-3 bg-black/30 backdrop-blur-xl text-gray-300 rounded-xl border border-white/10 hover:border-white/20 hover:text-white transition-all duration-200 text-center text-sm font-medium"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <CodeBracketIcon className="w-4 h-4" />
-                  View Code
-                </span>
-              </a>
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex-1 px-4 py-3 bg-gradient-to-r ${project.gradient} text-white rounded-xl hover:shadow-lg transition-all duration-200 text-center text-sm font-medium`}
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <EyeIcon className="w-4 h-4" />
-                  Live Demo
-                </span>
-              </a>
-            </div>
-          </div>
-        ),
-      }}
-      index={project.id}
-    />
-  ));
 
   return (
     <section id="projects" className="relative py-32 bg-black overflow-hidden">
@@ -195,9 +113,81 @@ const Projects: React.FC = () => {
             </motion.p>
           </div>
 
-          {/* Projects Carousel */}
-          <div className="w-full py-20">
-            <Carousel items={projectCards} />
+          {/* Projects Grid (lighter + faster than carousel) */}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, idx) => (
+              <motion.article
+                key={project.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: Math.min(idx * 0.05, 0.25) }}
+                viewport={{ once: true }}
+                className="group relative rounded-3xl border border-white/10 bg-black/30 backdrop-blur-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+              >
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${project.gradient} blur-2xl`} />
+
+                <div className="relative">
+                  <div className="relative h-56 overflow-hidden">
+                    <Image
+                      src={project.imageUrl}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+                    <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                      <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/50 border border-white/15 text-gray-100 backdrop-blur-xl">
+                        {project.category}
+                      </span>
+                      {project.featured && (
+                        <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 border border-white/15 text-white backdrop-blur-xl">
+                          Featured
+                        </span>
+                      )}
+                      <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 backdrop-blur-xl">
+                        {project.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-5">
+                      {project.description}
+                    </p>
+
+                    <details className="group/details">
+                      <summary className="cursor-pointer select-none text-sm font-semibold text-violet-300 hover:text-violet-200 transition-colors">
+                        More details
+                      </summary>
+                      <p className="mt-3 text-sm text-gray-300 leading-relaxed">
+                        {project.longDescription}
+                      </p>
+                    </details>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 6).map((tech, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 6 && (
+                        <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-400">
+                          +{project.technologies.length - 6} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </motion.div>
       </div>

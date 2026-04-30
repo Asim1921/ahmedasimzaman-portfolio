@@ -147,35 +147,9 @@ const Contact: React.FC = () => {
       <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
         
-        <motion.div 
-          className="absolute top-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.3, 0.5, 0.3],
-            x: [0, -25, 0],
-            y: [0, 15, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
+        {/* Static blobs (animation removed for performance) */}
+        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/15 to-blue-600/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-purple-500/15 to-pink-600/15 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -300,8 +274,7 @@ const Contact: React.FC = () => {
                 <Card className="p-6 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-green-500/20">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="relative">
-                      <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse"></div>
-                      <div className="absolute inset-0 w-4 h-4 bg-green-400 rounded-full animate-ping opacity-75"></div>
+                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                     </div>
                     <span className="text-green-400 font-bold text-lg">Available for Work</span>
                   </div>

@@ -18,23 +18,64 @@ import {
 const About: React.FC = () => {
   const experiences = [
     {
-      title: "Research Assistant",
-      company: "HEC (Higher Education Commission)",
-      period: "Aug 2023 - June 2024",
-      description: "Leading educational technology research and development project, contributing to innovative learning solutions and academic excellence.",
-      skills: ["Research", "Data Analysis", "Educational Technology", "Academic Writing", "Machine Learning"],
-      icon: <AcademicCapIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-emerald-500 to-teal-600",
+      title: "Full Stack Web Developer",
+      company: "inoTech Solutions",
+      location: "Rawalpindi, Pakistan",
+      period: "Nov 2025 – Present",
+      highlights: [
+        "Co-leading frontend development of CyberRange — an enterprise cybersecurity training platform — using React.js and Next.js, improving UI responsiveness and reducing page load times.",
+        "Built and shipped 10+ dynamic UI components with Tailwind CSS, enhancing accessibility and overall user experience across the platform.",
+        "Conducted regular code reviews, enforcing clean code standards and reducing bug density across the codebase.",
+        "Collaborated with backend engineers to integrate FastAPI REST endpoints into the frontend, streamlining data flows for challenge orchestration and scoring.",
+      ],
+      skills: ["React.js", "Next.js", "Tailwind CSS", "FastAPI", "Code Reviews"],
+      icon: <BriefcaseIcon className="h-6 w-6 dark:text-white" />,
+      gradient: "from-cyan-500 to-blue-600",
+    },
+    {
+      title: "Software Engineer",
+      company: "Komatsu Pakistan Soft",
+      location: "Rawalpindi, Pakistan",
+      period: "Jul 2025 – Oct 2025",
+      highlights: [
+        "Developed and maintained enterprise-level web applications using .NET Core, C#, Entity Framework Core, and Angular, supporting 500+ internal users.",
+        "Designed and implemented scalable RESTful APIs to support Angular frontend, reducing average API response time by ~30% through query optimization.",
+        "Built responsive Angular UI components, improving accessibility scores and reducing user-reported UI issues.",
+        "Participated in full SDLC: requirement analysis, architecture design, sprint planning, and deployment in an Agile team.",
+        "Optimized SQL Server queries and data models, cutting report generation time significantly on high-volume datasets.",
+      ],
+      skills: [".NET Core", "C#", "EF Core", "Angular", "SQL Server"],
+      icon: <CodeBracketIcon className="h-6 w-6 dark:text-white" />,
+      gradient: "from-violet-500 to-purple-600",
     },
     {
       title: "Developer",
       company: "Meta-Dao",
-      period: "July 2024 - Jan 2025", 
-      description: "Building cutting-edge decentralized applications and contributing to blockchain ecosystem development with modern web technologies.",
+      location: "Remote",
+      period: "July 2024 - Jan 2025",
+      highlights: [
+        "Built decentralized applications and contributed to blockchain ecosystem development with modern web technologies.",
+        "Developed backend systems using .NET, implemented RESTful APIs, and designed scalable database architectures.",
+        "Worked in an Agile environment delivering production-ready features with strong quality standards.",
+      ],
       skills: [".Net", "Blazor Framework", "MVC", "SSMS", "Swagger"],
       icon: <CodeBracketIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-violet-500 to-purple-600",
-    }
+      gradient: "from-pink-500 to-violet-600",
+    },
+    {
+      title: "Research Assistant",
+      company: "HEC (Higher Education Commission)",
+      location: "Pakistan",
+      period: "Aug 2023 - June 2024",
+      highlights: [
+        "Led educational technology R&D initiatives, contributing to innovative learning solutions.",
+        "Worked on machine learning applications for human pose estimation and educational data analysis.",
+        "Collaborated with academic teams on research publications and conference presentations.",
+      ],
+      skills: ["Research", "Data Analysis", "Educational Technology", "Academic Writing", "Machine Learning"],
+      icon: <AcademicCapIcon className="h-6 w-6 dark:text-white" />,
+      gradient: "from-emerald-500 to-teal-600",
+    },
   ];
 
   const education = [
@@ -61,35 +102,9 @@ const About: React.FC = () => {
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-purple-900/20 to-indigo-900/30"></div>
         
-        <motion.div 
-          className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-500/30 to-blue-600/30 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.5, 0.2],
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-pink-600/30 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.6, 0.3],
-            x: [0, -40, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
+        {/* Static blobs (animation removed for performance) */}
+        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-500/25 to-blue-600/25 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-purple-500/25 to-pink-600/25 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -249,20 +264,6 @@ const About: React.FC = () => {
                 </Card>
               </div>
 
-              {/* Resume Download Button */}
-              <div className="pt-4">
-                <a href="/api/resume" download>
-                  <Button
-                    borderRadius="1.75rem"
-                    className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800 w-full"
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <ArrowDownTrayIcon className="w-5 h-5" />
-                      <span>Download Resume</span>
-                    </div>
-                  </Button>
-                </a>
-              </div>
             </motion.div>
           </div>
 
@@ -278,7 +279,7 @@ const About: React.FC = () => {
               Professional Experience
             </h3>
             
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {experiences.map((exp, index) => (
                 <motion.div
                   key={index}
@@ -289,21 +290,43 @@ const About: React.FC = () => {
                   whileHover={{ scale: 1.02, y: -5 }}
                 >
                   <Card className="h-full hover:border-violet-500/50 transition-all duration-500">
-                    <CardSkeletonContainer>
-                      <Skeleton>
-                        {exp.icon}
-                      </Skeleton>
-                    </CardSkeletonContainer>
-                    <CardTitle className="text-xl mb-2">{exp.title}</CardTitle>
-                    <CardDescription className={`text-base font-semibold bg-gradient-to-r ${exp.gradient} bg-clip-text text-transparent mb-2`}>
-                      {exp.company}
-                    </CardDescription>
-                    <CardDescription className="text-gray-400 text-xs mb-4">
-                      {exp.period}
-                    </CardDescription>
-                    <CardDescription className="mb-6">
-                      {exp.description}
-                    </CardDescription>
+                    <div className="flex items-start gap-4 mb-5">
+                      <CardSkeletonContainer>
+                        <Skeleton>{exp.icon}</Skeleton>
+                      </CardSkeletonContainer>
+
+                      <div className="min-w-0 flex-1">
+                        <CardTitle className="text-xl mb-1">{exp.title}</CardTitle>
+                        <CardDescription
+                          className={`text-base font-semibold bg-gradient-to-r ${exp.gradient} bg-clip-text text-transparent`}
+                        >
+                          {exp.company}
+                        </CardDescription>
+
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200">
+                            <MapPinIcon className="w-4 h-4 text-gray-300" />
+                            {exp.location}
+                          </span>
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200">
+                            <CalendarIcon className="w-4 h-4 text-gray-300" />
+                            {exp.period}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <ul className="space-y-3 mb-6">
+                      {exp.highlights.map((item, itemIndex) => (
+                        <li key={itemIndex} className="flex gap-3">
+                          <span
+                            className={`mt-2 h-2 w-2 rounded-full bg-gradient-to-r ${exp.gradient} flex-shrink-0`}
+                          />
+                          <p className="text-gray-300 text-sm leading-relaxed">{item}</p>
+                        </li>
+                      ))}
+                    </ul>
+
                     <div className="flex flex-wrap gap-2">
                       {exp.skills.map((skill, skillIndex) => (
                         <span

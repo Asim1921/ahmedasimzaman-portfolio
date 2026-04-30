@@ -8,57 +8,57 @@ import { SparklesIcon, CodeBracketIcon, AcademicCapIcon } from '@heroicons/react
 const Experience: React.FC = () => {
   const content = [
     {
-      title: "Research Assistant at HEC",
+      title: "Full Stack Web Developer — inoTech Solutions",
       description:
-        "Leading educational technology research and development project, contributing to innovative learning solutions and academic excellence. Worked on cutting-edge machine learning applications for human pose estimation and educational data analysis. Collaborated with academic teams to develop research papers and present findings at conferences.",
+        "Co-leading frontend development of CyberRange — an enterprise cybersecurity training platform — using React.js and Next.js. Built 10+ Tailwind UI components, improved accessibility, and integrated FastAPI endpoints for challenge orchestration and scoring.",
       content: (
         <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white rounded-lg p-8">
           <div className="text-center">
-            <AcademicCapIcon className="w-20 h-20 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Research & Innovation</h3>
-            <p className="text-lg opacity-90">Aug 2023 - June 2024</p>
+            <CodeBracketIcon className="w-20 h-20 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold mb-2">React + Next.js</h3>
+            <p className="text-lg opacity-90">Nov 2025 – Present</p>
           </div>
         </div>
       ),
     },
     {
-      title: "Developer at Meta-Dao",
+      title: "Software Engineer — Komatsu Pakistan Soft",
       description:
-        "Building cutting-edge decentralized applications and contributing to blockchain ecosystem development with modern web technologies. Developed robust backend systems using .NET framework, implemented RESTful APIs, and designed scalable database architectures. Worked in agile development environment, delivering high-quality software solutions.",
+        "Developed enterprise web apps with .NET Core, C#, EF Core, and Angular for 500+ internal users. Implemented scalable REST APIs and optimized SQL Server queries, reducing response times (~30%) and improving report performance on high-volume datasets.",
       content: (
         <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--pink-500),var(--violet-500))] text-white rounded-lg p-8">
           <div className="text-center">
             <CodeBracketIcon className="w-20 h-20 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Blockchain Development</h3>
-            <p className="text-lg opacity-90">July 2024 - Jan 2025</p>
+            <h3 className="text-2xl font-bold mb-2">.NET + Angular</h3>
+            <p className="text-lg opacity-90">Jul 2025 – Oct 2025</p>
           </div>
         </div>
       ),
     },
     {
-      title: "Full Stack Projects",
+      title: "Developer — Meta-Dao",
       description:
-        "Developed EventEase - an innovative event management platform, and VolunteerMe - a community engagement application. Built using Next.js, React, Node.js, and MongoDB. These projects showcase my ability to create end-to-end solutions that solve real-world problems and make a positive impact on communities.",
+        "Built decentralized applications and contributed to blockchain ecosystem development. Developed backend services with .NET, implemented RESTful APIs, and designed scalable database architectures in an Agile environment.",
       content: (
         <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white rounded-lg p-8">
           <div className="text-center">
-            <SparklesIcon className="w-20 h-20 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Full Stack Solutions</h3>
-            <p className="text-lg opacity-90">2023 - Present</p>
+            <CodeBracketIcon className="w-20 h-20 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold mb-2">Web3 + APIs</h3>
+            <p className="text-lg opacity-90">Jul 2024 – Jan 2025</p>
           </div>
         </div>
       ),
     },
     {
-      title: "Skills & Technologies",
+      title: "Research Assistant — HEC",
       description:
-        "Proficient in modern web development stack including React, Next.js, TypeScript, Node.js, MongoDB, and PostgreSQL. Experienced in cloud platforms like Vercel and AWS. Strong understanding of UI/UX principles, responsive design, and performance optimization. Continuously learning and adapting to new technologies.",
+        "Led educational technology R&D and worked on machine learning applications for pose estimation and educational data analysis. Collaborated with academic teams on research outputs and presentations.",
       content: (
         <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white rounded-lg p-8">
           <div className="text-center">
-            <CodeBracketIcon className="w-20 h-20 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Tech Stack Mastery</h3>
-            <p className="text-lg opacity-90">20+ Technologies</p>
+            <AcademicCapIcon className="w-20 h-20 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold mb-2">Research & ML</h3>
+            <p className="text-lg opacity-90">Aug 2023 - June 2024</p>
           </div>
         </div>
       ),
@@ -71,35 +71,9 @@ const Experience: React.FC = () => {
       <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
         
-        <motion.div 
-          className="absolute top-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-gradient-to-r from-purple-500/20 to-pink-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.3, 0.5, 0.3],
-            x: [0, -40, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
+        {/* Static blobs (animation removed for performance) */}
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/15 to-blue-600/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-gradient-to-r from-purple-500/15 to-pink-600/15 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

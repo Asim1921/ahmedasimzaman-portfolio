@@ -99,37 +99,13 @@ const Skeleton = ({ children }: { children: React.ReactNode }) => {
 };
 
 const Sparkles = () => {
-  const randomMove = () => Math.random() * 2 - 1;
-  const randomOpacity = () => Math.random();
-  const random = () => Math.random();
   return (
     <div className="absolute inset-0">
-      {[...Array(12)].map((_, i) => (
-        <motion.span
-          key={`star-${i}`}
-          animate={{
-            top: `calc(${random() * 100}% + ${randomMove()}px)`,
-            left: `calc(${random() * 100}% + ${randomMove()}px)`,
-            opacity: randomOpacity(),
-            scale: [1, 1.2, 0],
-          }}
-          transition={{
-            duration: random() * 2 + 4,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{
-            position: "absolute",
-            top: `${random() * 100}%`,
-            left: `${random() * 100}%`,
-            width: `2px`,
-            height: `2px`,
-            borderRadius: "50%",
-            zIndex: 1,
-          }}
-          className="inline-block bg-black dark:bg-white"
-        ></motion.span>
-      ))}
+      {/* Static sparkles (removed infinite animation for performance) */}
+      <span className="absolute top-[15%] left-[20%] inline-block w-[2px] h-[2px] rounded-full bg-black dark:bg-white opacity-60" />
+      <span className="absolute top-[35%] left-[70%] inline-block w-[2px] h-[2px] rounded-full bg-black dark:bg-white opacity-40" />
+      <span className="absolute top-[60%] left-[30%] inline-block w-[2px] h-[2px] rounded-full bg-black dark:bg-white opacity-50" />
+      <span className="absolute top-[75%] left-[80%] inline-block w-[2px] h-[2px] rounded-full bg-black dark:bg-white opacity-30" />
     </div>
   );
 };

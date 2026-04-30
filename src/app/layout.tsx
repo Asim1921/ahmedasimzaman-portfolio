@@ -4,8 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PerformanceMonitor from '@/components/ui/PerformanceMonitor';
-import ShootingStars from '@/components/ui/ShootingStars';
-import BackgroundRipple from '@/components/ui/BackgroundRipple';
+// Note: intentionally keep the global background lightweight for smoother UX.
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -98,8 +97,6 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased bg-black relative overflow-x-hidden`}>
         <PerformanceMonitor />
-        <ShootingStars />
-        <BackgroundRipple />
         <Header />
         <main className="relative z-10">
           {children}

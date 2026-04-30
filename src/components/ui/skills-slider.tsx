@@ -130,11 +130,8 @@ export const SkillsSlider = ({
                         animate={{ width: `${skill.proficiency}%` }}
                         transition={{ duration: 1, delay: 0.3 + index * 0.1, ease: "easeOut" }}
                       >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                          animate={{ x: ['-100%', '100%'] }}
-                          transition={{ duration: 2, delay: 1.3, repeat: Infinity, ease: "linear" }}
-                        />
+                        {/* Removed infinite shimmer for performance */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50" />
                       </motion.div>
                     </div>
                   </div>

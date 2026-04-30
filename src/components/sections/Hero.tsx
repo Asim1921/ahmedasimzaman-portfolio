@@ -1,28 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDownIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import MagicButton from '@/components/ui/MagicButton';
 import AnimatedGradientText from '@/components/ui/AnimatedGradientText';
 import { cn } from '@/lib/utils';
 
 const Hero: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById('about');
@@ -43,32 +33,9 @@ const Hero: React.FC = () => {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-violet-950/50 via-purple-950/30 to-indigo-950/50" />
         
-        {/* Animated orbs */}
-        <motion.div 
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-violet-500/20 to-purple-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
+        {/* Static orbs (animation removed for performance) */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-violet-500/20 to-purple-600/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-full blur-3xl" />
       </div>
 
       <motion.div 
@@ -86,7 +53,7 @@ const Hero: React.FC = () => {
           >
             <div className="relative group">
               {/* Animated border glow */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-all duration-500 animate-pulse" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-all duration-500" />
               
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
                 {/* Glassmorphic border */}
@@ -97,7 +64,7 @@ const Hero: React.FC = () => {
                 {/* Profile Image */}
                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 shadow-2xl group-hover:border-purple-500/50 transition-all duration-500">
                   <Image
-                    src="/images/dp.jpg"
+                    src="/images/1768992951974.jfif"
                     alt="Ahmed Asim Zaman"
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -167,16 +134,6 @@ const Hero: React.FC = () => {
                   <ChevronDownIcon className="w-5 h-5 ml-2 inline" />
                 </MagicButton>
               </Link>
-              
-              <Link
-                href="/api/resume"
-                className="group relative px-8 py-4 bg-black/40 backdrop-blur-xl text-white font-bold rounded-lg border border-white/10 hover:bg-white/10 transition-all duration-500 shadow-xl"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <ArrowDownTrayIcon className="w-5 h-5" />
-                  Download Resume
-                </span>
-              </Link>
             </motion.div>
 
             {/* Tech Stack Icons */}
@@ -229,8 +186,6 @@ const Hero: React.FC = () => {
           <motion.button 
             onClick={scrollToAbout}
             className="p-3 bg-white/5 backdrop-blur-xl rounded-full border border-white/10 text-white hover:bg-white/10 transition-all duration-500 shadow-xl group"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >

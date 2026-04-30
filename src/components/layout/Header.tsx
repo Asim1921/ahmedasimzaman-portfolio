@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import ResumeDownload from '@/components/ui/ResumeDownload';
 import { 
   Bars3Icon, 
   XMarkIcon,
@@ -21,7 +20,6 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Handle scroll effect
   useEffect(() => {
@@ -31,23 +29,6 @@ const Header: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Mouse tracking for interactive effects
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const header = document.getElementById('main-header');
-      if (header) {
-        const rect = header.getBoundingClientRect();
-        setMousePosition({ 
-          x: e.clientX - rect.left, 
-          y: e.clientY - rect.top 
-        });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   // Handle active section tracking
@@ -150,47 +131,16 @@ const Header: React.FC = () => {
             : 'bg-transparent'
         }`}
       >
-        {/* Interactive mouse glow */}
-        <div 
-          className="absolute w-96 h-96 bg-gradient-to-r from-violet-500/20 via-purple-600/20 to-indigo-500/20 rounded-full blur-3xl pointer-events-none transition-all duration-300 opacity-0 hover:opacity-100"
-          style={{
-            left: mousePosition.x - 192,
-            top: mousePosition.y - 192,
-          }}
-        ></div>
+        {/* Static glow (mouse-tracking removed for performance) */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[20rem] bg-gradient-to-r from-violet-500/10 via-purple-600/10 to-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Animated mesh background */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-900/10 via-purple-900/5 to-indigo-900/10"></div>
           
-          {/* Floating particles */}
-          <motion.div 
-            className="absolute -top-10 left-1/4 w-20 h-20 bg-gradient-to-r from-violet-500/30 to-purple-600/30 rounded-full blur-2xl"
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.6, 0.3],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div 
-            className="absolute -top-10 right-1/3 w-16 h-16 bg-gradient-to-r from-cyan-500/30 to-blue-600/30 rounded-full blur-2xl"
-            animate={{
-              y: [0, -15, 0],
-              opacity: [0.2, 0.5, 0.2],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
+          {/* Static particles (animation removed for performance) */}
+          <div className="absolute -top-10 left-1/4 w-20 h-20 bg-gradient-to-r from-violet-500/20 to-purple-600/20 rounded-full blur-2xl" />
+          <div className="absolute -top-10 right-1/3 w-16 h-16 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-2xl" />
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
@@ -224,13 +174,9 @@ const Header: React.FC = () => {
                   </div>
                   
                   {/* Floating sparkle */}
-                  <motion.div 
-                    className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-all duration-500"
-                    animate={{ rotate: [0, 180, 360] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  >
+                  <div className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
                     <SparklesIcon className="w-4 h-4 text-violet-400" />
-                  </motion.div>
+                  </div>
                 </div>
                 
                 {/* Brand text */}
@@ -331,16 +277,6 @@ const Header: React.FC = () => {
 
             {/* Premium Action Buttons */}
             <div className="flex items-center space-x-4">
-              {/* Enhanced Resume Button */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="hidden md:block"
-              >
-               <ResumeDownload variant="button" />
-              </motion.div>
-
               {/* Futuristic Mobile Menu Button */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -453,15 +389,6 @@ const Header: React.FC = () => {
                     </motion.div>
                   ))}
                   
-                  {/* Mobile Resume Button */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: navigation.length * 0.1 }}
-                    className="pt-4"
-                  >
-                   <ResumeDownload variant="button" className="w-full" />
-                  </motion.div>
                 </div>
               </nav>
             </motion.div>

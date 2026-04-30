@@ -34,7 +34,8 @@ export const StickyScroll = ({
       },
       0
     );
-    setActiveCard(closestBreakpointIndex);
+    // Avoid re-rendering on every scroll tick when the active card doesn't change.
+    setActiveCard((prev) => (prev === closestBreakpointIndex ? prev : closestBreakpointIndex));
   });
 
   const backgroundColors = [
