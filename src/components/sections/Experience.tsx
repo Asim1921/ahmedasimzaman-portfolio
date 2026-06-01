@@ -69,7 +69,7 @@ const Experience: React.FC = () => {
             <Reveal as="li" key={exp.company} delay={i * 70} className="relative pl-7 sm:pl-10">
               <span className="absolute -left-[7px] top-6 h-3.5 w-3.5 rounded-full border-2 border-ink bg-accent" />
 
-              <div className="rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-[var(--line-strong)]">
+              <div className="card rounded-2xl border border-line bg-surface p-6">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="font-mono text-xs text-[var(--faint)]">{exp.period}</span>
                   <span className="rounded-full border border-line px-2.5 py-1 text-[11px] text-[var(--muted)]">

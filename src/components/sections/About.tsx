@@ -20,8 +20,8 @@ const facts = [
 ];
 
 const stats = [
-  { value: 2, suffix: '+', label: 'Years of experience' },
-  { value: 15, suffix: '+', label: 'Projects shipped' },
+  { value: 3, suffix: '+', label: 'Years of experience' },
+  { value: 25, suffix: '+', label: 'Projects shipped' },
   { value: 20, suffix: '+', label: 'Technologies' },
   { value: 4, suffix: '', label: 'Professional roles' },
 ];
@@ -89,7 +89,7 @@ const About: React.FC = () => {
                 <Reveal
                   key={s.title}
                   delay={i * 80}
-                  className="group flex items-start gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-[var(--line-strong)]"
+                  className="card group flex items-start gap-4 rounded-2xl border border-line bg-surface p-5"
                 >
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line bg-surface-2 text-accent-soft">
                     <s.icon className="h-5 w-5" />

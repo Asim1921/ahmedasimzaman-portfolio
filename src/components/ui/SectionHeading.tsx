@@ -23,7 +23,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
   return (
     <div className={cn(centered ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl', className)}>
       <Reveal className={cn('flex items-center gap-3', centered && 'justify-center')}>
-        {index && <span className="font-mono text-xs text-accent-soft">{index}</span>}
+        {index && <span className="font-mono text-xs font-medium text-accent-gradient">{index}</span>}
         <span className="eyebrow">{eyebrow}</span>
         <span className="h-px w-10 bg-line" />
       </Reveal>

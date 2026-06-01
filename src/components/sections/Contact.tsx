@@ -97,7 +97,7 @@ const Contact: React.FC = () => {
             <Reveal className="space-y-3">
               {contactInfo.map((info) => {
                 const Inner = (
-                  <div className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-[var(--line-strong)]">
+                  <div className="card flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
                     <span className="grid h-11 w-11 place-items-center rounded-lg border border-line bg-surface-2 text-accent-soft">
                       <info.icon className="h-5 w-5" />
                     </span>

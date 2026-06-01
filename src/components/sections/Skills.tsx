@@ -84,7 +84,7 @@ const Skills: React.FC = () => {
             <Reveal
               key={group.title}
               delay={gi * 80}
-              className="rounded-3xl border border-line bg-surface p-7"
+              className="card rounded-3xl border border-line bg-surface p-7"
             >
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white">{group.title}</h3>

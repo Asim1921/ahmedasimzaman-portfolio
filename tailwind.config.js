@@ -29,6 +29,10 @@ module.exports = {
           soft: '#a99bff',
           deep: '#6d5dff',
         },
+        accent2: {
+          DEFAULT: '#38bdf8',
+          deep: '#0ea5e9',
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

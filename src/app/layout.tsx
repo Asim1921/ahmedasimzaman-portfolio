@@ -96,6 +96,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="font-sans bg-ink text-[var(--text)] antialiased relative overflow-x-hidden selection:bg-accent/30">
+        <div aria-hidden className="grain" />
         <PerformanceMonitor />
         <Header />
         <main className="relative z-10">{children}</main>

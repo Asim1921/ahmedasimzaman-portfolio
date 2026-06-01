@@ -19,6 +19,10 @@
   --accent: #8b7bff;
   --accent-soft: #a99bff;
   --accent-deep: #6d5dff;
+
+  /* secondary accent — adds modern colour depth, used sparingly */
+  --accent-2: #38bdf8;
+  --accent-2-deep: #0ea5e9;
 }
 
 /* ------------------------------------------------------------------ */
@@ -92,9 +96,9 @@ body {
   color: transparent;
 }
 
-/* Accent gradient text — used sparingly */
+/* Accent gradient text — violet → sky, used sparingly */
 .text-accent-gradient {
-  background: linear-gradient(100deg, var(--accent-soft), var(--accent-deep));
+  background: linear-gradient(100deg, var(--accent-soft) 0%, #c4b5fd 45%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -119,11 +123,58 @@ body {
   );
 }
 
-/* Soft static aurora glow */
+/* Soft static aurora glow — two-tone (violet + sky) */
 .aurora {
   background:
-    radial-gradient(40rem 24rem at 70% -10%, rgba(109, 93, 255, 0.16), transparent 60%),
-    radial-gradient(34rem 20rem at 10% 10%, rgba(56, 189, 248, 0.08), transparent 60%);
+    radial-gradient(42rem 26rem at 72% -12%, rgba(109, 93, 255, 0.22), transparent 60%),
+    radial-gradient(34rem 22rem at 6% 6%, rgba(56, 189, 248, 0.12), transparent 60%),
+    radial-gradient(30rem 20rem at 50% 116%, rgba(139, 123, 255, 0.1), transparent 60%);
+}
+
+/* Film grain overlay — sits behind content, adds subtle texture/depth */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Card hover — gentle accent glow + lift, applied alongside border utilities */
+.card {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.4s ease,
+    transform 0.3s ease;
+}
+.card:hover {
+  border-color: rgba(139, 123, 255, 0.3);
+  box-shadow:
+    0 14px 44px -18px rgba(109, 93, 255, 0.38),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Gradient border ring (violet → sky) drawn over an element's own border */
+.gradient-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139, 123, 255, 0.7), rgba(56, 189, 248, 0.4) 45%, transparent 70%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.4s ease;
+}
+.gradient-frame:hover::before {
+  opacity: 1;
 }
 
 /* Faint grid backdrop, masked to fade out */

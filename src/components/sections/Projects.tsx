@@ -17,13 +17,21 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: 'Raabta',
+    category: 'Multi-Tenant WhatsApp CRM',
+    description:
+      'A shared WhatsApp inbox & CRM for Pakistani SMEs. Connect a business number by scanning a QR and turn everyday chats into an organised, multi-agent sales & support workflow — a real-time 3-pane inbox with assignment, statuses, notes, reminders and rich media, all on a truly multi-tenant core.',
+    technologies: ['.NET 10', 'Next.js 16', 'PostgreSQL', 'SignalR', 'Node.js', 'Baileys', 'EF Core', 'Tailwind'],
+    imageUrl: '/images/projects/Raabta.png',
+    featured: true,
+  },
+  {
     title: 'EventEase',
     category: 'Event Management',
     description:
       'A comprehensive event-management platform that simplifies planning, registration and coordination, with automated notifications and integrated payments built on a microservices architecture.',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Stripe', 'Socket.io'],
     imageUrl: '/images/projects/EaseUsPlatform.png',
-    featured: true,
   },
   {
     title: 'Clickgoffer',
@@ -93,7 +101,7 @@ const Projects: React.FC = () => {
         />
 
         {/* Featured */}
-        <Reveal className="group mt-16 grid overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-[var(--line-strong)] lg:grid-cols-2">
+        <Reveal className="card gradient-frame group relative mt-16 grid overflow-hidden rounded-3xl border border-line bg-surface lg:grid-cols-2">
           <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[380px]">
             <Image
               src={featured.imageUrl}
@@ -125,7 +133,7 @@ const Projects: React.FC = () => {
               as="article"
               key={p.title}
               delay={i * 70}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-[var(--line-strong)]"
+              className="card group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface hover:-translate-y-1"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image

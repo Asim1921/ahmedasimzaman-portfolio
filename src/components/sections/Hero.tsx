@@ -96,15 +96,15 @@ const Hero: React.FC = () => {
           {/* Portrait */}
           <div className="lg:col-span-5">
             <Reveal delay={160} className="relative mx-auto w-full max-w-sm">
-              {/* soft accent ring (static, no neon) */}
+              {/* soft two-tone glow */}
               <div
                 aria-hidden
-                className="absolute -inset-px rounded-[28px] bg-gradient-to-b from-accent/30 via-transparent to-transparent"
+                className="absolute -inset-6 rounded-[40px] bg-gradient-to-tr from-accent-deep/30 via-accent2/20 to-transparent blur-3xl opacity-70"
               />
-              <div className="relative overflow-hidden rounded-[28px] border border-line bg-surface">
+              <div className="gradient-frame relative overflow-hidden rounded-[28px] border border-line bg-surface">
                 <div className="relative aspect-[4/5]">
                   <Image
-                    src="/images/1768992951974.jfif"
+                    src="/images/profile.jpg"
                     alt="Ahmed Asim Zaman"
                     fill
                     priority
