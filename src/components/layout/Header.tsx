@@ -1,404 +1,175 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Bars3Icon, 
-  XMarkIcon,
-  DocumentArrowDownIcon,
-  HomeIcon,
-  UserIcon,
-  BriefcaseIcon,
-  CogIcon,
-  ChatBubbleLeftRightIcon,
-  SparklesIcon,
-  DocumentTextIcon
-} from '@heroicons/react/24/outline';
+import { ArrowUpRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { cn } from '@/lib/utils';
+
+type NavItem = { name: string; href: string; section: string; type: 'scroll' | 'link' };
+
+const navigation: NavItem[] = [
+  { name: 'About', href: '#about', section: 'about', type: 'scroll' },
+  { name: 'Experience', href: '#experience', section: 'experience', type: 'scroll' },
+  { name: 'Work', href: '#projects', section: 'projects', type: 'scroll' },
+  { name: 'Skills', href: '#skills', section: 'skills', type: 'scroll' },
+  { name: 'Blog', href: '/blog', section: 'blog', type: 'link' },
+  { name: 'Contact', href: '#contact', section: 'contact', type: 'scroll' },
+];
+
+const spySections = ['hero', 'about', 'experience', 'projects', 'skills', 'contact'];
 
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('hero');
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 24);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Handle active section tracking
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
+        const pos = window.scrollY + 120;
+        let current = spySections[0];
+        for (const id of spySections) {
+          const el = document.getElementById(id);
+          if (el && pos >= el.offsetTop) current = id;
         }
-      }
+        setActive(current);
+        ticking = false;
+      });
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navigation = [
-    { 
-      name: 'Home', 
-      href: '#hero', 
-      icon: HomeIcon,
-      section: 'hero',
-      glow: 'from-violet-400 via-purple-500 to-indigo-600',
-      type: 'scroll'
-    },
-    { 
-      name: 'About', 
-      href: '#about', 
-      icon: UserIcon,
-      section: 'about',
-      glow: 'from-emerald-400 via-teal-500 to-cyan-600',
-      type: 'scroll'
-    },
-    { 
-      name: 'Projects', 
-      href: '#projects', 
-      icon: BriefcaseIcon,
-      section: 'projects',
-      glow: 'from-rose-400 via-pink-500 to-red-600',
-      type: 'scroll'
-    },
-    { 
-      name: 'Skills', 
-      href: '#skills', 
-      icon: CogIcon,
-      section: 'skills',
-      glow: 'from-amber-400 via-orange-500 to-yellow-600',
-      type: 'scroll'
-    },
-    { 
-      name: 'Blog', 
-      href: '/blog', 
-      icon: DocumentTextIcon,
-      section: 'blog',
-      glow: 'from-green-400 via-lime-500 to-emerald-600',
-      type: 'link'
-    },
-    { 
-      name: 'Contact', 
-      href: '#contact', 
-      icon: ChatBubbleLeftRightIcon,
-      section: 'contact',
-      glow: 'from-blue-400 via-indigo-500 to-purple-600',
-      type: 'scroll'
-    },
-  ];
-
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleScrollTo = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-    setIsMenuOpen(false);
-  };
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setMenuOpen(false);
+  }, []);
 
   return (
-    <>
-      <motion.header
-        id="main-header"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          isScrolled
-            ? 'backdrop-blur-2xl bg-black/80 border-b border-white/10 shadow-2xl shadow-purple-500/20'
-            : 'bg-transparent'
-        }`}
-      >
-        {/* Static glow (mouse-tracking removed for performance) */}
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[20rem] bg-gradient-to-r from-violet-500/10 via-purple-600/10 to-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
+        scrolled || menuOpen
+          ? 'border-b border-line bg-ink/80 backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent'
+      )}
+    >
+      <div className="container flex h-16 items-center justify-between">
+        {/* Brand */}
+        <Link href="/" className="group flex items-center gap-3" onClick={() => setMenuOpen(false)}>
+          <span className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-surface-2 text-sm font-semibold text-white transition-colors group-hover:border-[var(--line-strong)]">
+            A
+          </span>
+          <span className="hidden sm:flex flex-col leading-none">
+            <span className="text-sm font-semibold text-white">Ahmed Asim Zaman</span>
+            <span className="mt-1 text-[11px] tracking-wide text-[var(--faint)]">Full-Stack Engineer</span>
+          </span>
+        </Link>
 
-        {/* Animated mesh background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-violet-900/10 via-purple-900/5 to-indigo-900/10"></div>
-          
-          {/* Static particles (animation removed for performance) */}
-          <div className="absolute -top-10 left-1/4 w-20 h-20 bg-gradient-to-r from-violet-500/20 to-purple-600/20 rounded-full blur-2xl" />
-          <div className="absolute -top-10 right-1/3 w-16 h-16 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-2xl" />
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex items-center justify-between h-20">
-            
-            {/* Ultra-Premium Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative group"
-            >
-              <Link 
-                href="/"
-                className="flex items-center space-x-4"
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {navigation.map((item) =>
+            item.type === 'link' ? (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="rounded-full px-3.5 py-2 text-sm text-[var(--muted)] transition-colors hover:text-white"
               >
-                {/* Multi-layered logo */}
-                <div className="relative">
-                  {/* Outer glow ring */}
-                  <div className="absolute -inset-3 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-2xl blur-lg opacity-0 group-hover:opacity-60 transition-all duration-500"></div>
-                  
-                  {/* Main logo container */}
-                  <div className="relative w-12 h-12 bg-gradient-to-br from-violet-600 via-purple-700 to-indigo-800 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-500/50 group-hover:shadow-purple-400/70 transition-all duration-500 border border-white/20 backdrop-blur-xl overflow-hidden">
-                    {/* Animated background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Letter */}
-                    <span className="relative z-10 text-white font-black text-xl group-hover:scale-110 transition-transform duration-300">A</span>
-                    
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                  </div>
-                  
-                  {/* Floating sparkle */}
-                  <div className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <SparklesIcon className="w-4 h-4 text-violet-400" />
-                  </div>
-                </div>
-                
-                {/* Brand text */}
-                <div className="hidden sm:block">
-                  <motion.h1 
-                    className="text-xl font-black bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent group-hover:from-violet-300 group-hover:via-purple-300 group-hover:to-indigo-300 transition-all duration-500"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    Ahmed Asim
-                  </motion.h1>
-                  <p className="text-sm font-semibold bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                    Full Stack Developer
-                  </p>
-                </div>
+                {item.name}
               </Link>
-            </motion.div>
-
-            {/* Revolutionary Desktop Navigation */}
-            <nav className="hidden lg:flex relative">
-              {/* Navigation container with glassmorphism */}
-              <div className="flex items-center space-x-2 bg-black/30 backdrop-blur-2xl rounded-2xl p-2 border border-white/10 shadow-2xl shadow-purple-500/20">
-                {navigation.map((item, index) => (
-                  <motion.div
-                    key={item.name}
-                    className="relative"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                  >
-                    {item.type === 'link' ? (
-                      <Link
-                        href={item.href}
-                        className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-500 overflow-hidden ${
-                          activeSection === item.section
-                            ? 'text-white shadow-lg'
-                            : 'text-gray-300 hover:text-white'
-                        }`}
-                      >
-                        {/* Active background with morphing effect */}
-                        {activeSection === item.section && (
-                          <motion.div
-                            layoutId="activeNavBackground"
-                            className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl`}
-                            initial={false}
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                        
-                        {/* Hover glow effect */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl opacity-0 group-hover:opacity-20 transition-all duration-500`}></div>
-                        
-                        {/* Icon and text */}
-                        <item.icon className="w-4 h-4 relative z-10" />
-                        <span className="relative z-10 text-sm">{item.name}</span>
-                        
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                        </div>
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        onClick={(e) => handleSmoothScroll(e, item.href)}
-                        className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-500 overflow-hidden ${
-                          activeSection === item.section
-                            ? 'text-white shadow-lg'
-                            : 'text-gray-300 hover:text-white'
-                        }`}
-                      >
-                        {/* Active background with morphing effect */}
-                        {activeSection === item.section && (
-                          <motion.div
-                            layoutId="activeNavBackground"
-                            className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl`}
-                            initial={false}
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                        
-                        {/* Hover glow effect */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${item.glow} rounded-xl opacity-0 group-hover:opacity-20 transition-all duration-500`}></div>
-                        
-                        {/* Icon and text */}
-                        <item.icon className="w-4 h-4 relative z-10" />
-                        <span className="relative z-10 text-sm">{item.name}</span>
-                        
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                        </div>
-                      </a>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </nav>
-
-            {/* Premium Action Buttons */}
-            <div className="flex items-center space-x-4">
-              {/* Futuristic Mobile Menu Button */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden relative group"
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => handleScrollTo(e, item.href)}
+                className={cn(
+                  'relative rounded-full px-3.5 py-2 text-sm transition-colors',
+                  active === item.section ? 'text-white' : 'text-[var(--muted)] hover:text-white'
+                )}
               >
-                {/* Button container */}
-                <div className="relative p-3 bg-black/30 backdrop-blur-2xl rounded-2xl border border-white/10 text-white hover:bg-white/10 transition-all duration-500 shadow-xl shadow-purple-500/20">
-                  {/* Glow effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
-                  
-                  {/* Animated icon */}
-                  <motion.div
-                    animate={{ rotate: isMenuOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative z-10"
-                  >
-                    {isMenuOpen ? (
-                      <XMarkIcon className="w-6 h-6" />
-                    ) : (
-                      <Bars3Icon className="w-6 h-6" />
-                    )}
-                  </motion.div>
-                </div>
-              </motion.button>
-            </div>
-          </div>
-        </div>
-
-        {/* Premium Mobile Navigation Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0, y: -20 }}
-              animate={{ opacity: 1, height: 'auto', y: 0 }}
-              exit={{ opacity: 0, height: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="lg:hidden backdrop-blur-2xl bg-black/90 border-t border-white/10 shadow-2xl"
-            >
-              {/* Mobile menu background effects */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
-              
-              <nav className="container mx-auto px-6 py-8 relative z-10">
-                <div className="space-y-2">
-                  {navigation.map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      {item.type === 'link' ? (
-                        <Link
-                          href={item.href}
-                          onClick={() => setIsMenuOpen(false)}
-                          className={`group relative flex items-center gap-4 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border overflow-hidden ${
-                            activeSection === item.section
-                              ? `bg-gradient-to-r ${item.glow} text-white border-white/20 shadow-2xl`
-                              : 'text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          {/* Icon container */}
-                          <div className={`p-2 rounded-xl bg-gradient-to-r ${item.glow} shadow-lg flex-shrink-0`}>
-                            <item.icon className="w-5 h-5 text-white" />
-                          </div>
-                          
-                          {/* Text */}
-                          <span className="text-lg flex-1">{item.name}</span>
-                          
-                          {/* Arrow indicator */}
-                          <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </div>
-                          
-                          {/* Shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                        </Link>
-                      ) : (
-                        <a
-                          href={item.href}
-                          onClick={(e) => handleSmoothScroll(e, item.href)}
-                          className={`group relative flex items-center gap-4 px-6 py-4 rounded-2xl font-semibold transition-all duration-500 border overflow-hidden ${
-                            activeSection === item.section
-                              ? `bg-gradient-to-r ${item.glow} text-white border-white/20 shadow-2xl`
-                              : 'text-gray-300 hover:text-white border-white/10 hover:bg-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          {/* Icon container */}
-                          <div className={`p-2 rounded-xl bg-gradient-to-r ${item.glow} shadow-lg flex-shrink-0`}>
-                            <item.icon className="w-5 h-5 text-white" />
-                          </div>
-                          
-                          {/* Text */}
-                          <span className="text-lg flex-1">{item.name}</span>
-                          
-                          {/* Arrow indicator */}
-                          <div className="opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                          </div>
-                          
-                          {/* Shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                        </a>
-                      )}
-                    </motion.div>
-                  ))}
-                  
-                </div>
-              </nav>
-            </motion.div>
+                {item.name}
+                {active === item.section && (
+                  <span className="absolute inset-x-3.5 -bottom-px h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+                )}
+              </a>
+            )
           )}
-        </AnimatePresence>
-      </motion.header>
+        </nav>
 
-      {/* Dynamic spacer that adjusts for header height */}
-      <div className="h-20"></div>
-    </>
+        {/* Action */}
+        <div className="flex items-center gap-2">
+          <a
+            href="/resume/AhmedAsimZamanCV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-full border border-line px-4 text-[13px] font-medium text-[var(--text)] transition-colors hover:border-[var(--line-strong)] hover:bg-white/[0.04]"
+          >
+            Résumé
+            <ArrowUpRightIcon className="h-3.5 w-3.5" />
+          </a>
+
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-line text-white lg:hidden"
+          >
+            {menuOpen ? <XMarkIcon className="h-5 w-5" /> : <Bars3Icon className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <nav className="lg:hidden border-t border-line bg-ink/95 backdrop-blur-xl">
+          <div className="container flex flex-col py-4">
+            {navigation.map((item) =>
+              item.type === 'link' ? (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between border-b border-line/60 py-3 text-[15px] text-[var(--text)] last:border-0"
+                >
+                  {item.name}
+                  <ArrowUpRightIcon className="h-4 w-4 text-[var(--faint)]" />
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => handleScrollTo(e, item.href)}
+                  className={cn(
+                    'flex items-center justify-between border-b border-line/60 py-3 text-[15px] last:border-0',
+                    active === item.section ? 'text-white' : 'text-[var(--muted)]'
+                  )}
+                >
+                  {item.name}
+                  {active === item.section && <span className="h-1.5 w-1.5 rounded-full bg-accent" />}
+                </a>
+              )
+            )}
+            <a
+              href="/resume/AhmedAsimZamanCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white text-sm font-medium text-ink"
+            >
+              Download Résumé
+              <ArrowUpRightIcon className="h-4 w-4" />
+            </a>
+          </div>
+        </nav>
+      )}
+    </header>
   );
 };
 

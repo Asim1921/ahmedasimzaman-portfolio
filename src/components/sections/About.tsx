@@ -2,394 +2,158 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/moving-border';
-import { Card, CardTitle, CardDescription, CardSkeletonContainer, Skeleton } from '@/components/ui/modern-card';
-import { 
-  MapPinIcon, 
-  CalendarIcon, 
-  SparklesIcon, 
-  CodeBracketIcon, 
+import {
+  CodeBracketIcon,
+  ServerStackIcon,
+  SwatchIcon,
   AcademicCapIcon,
-  BriefcaseIcon,
-  ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
+import Reveal from '@/components/ui/Reveal';
+import CountUp from '@/components/ui/CountUp';
+import SectionHeading from '@/components/ui/SectionHeading';
+
+const facts = [
+  { label: 'Based in', value: 'Islamabad, PK' },
+  { label: 'Experience', value: '2+ years' },
+  { label: 'Focus', value: 'Web platforms' },
+  { label: 'Open to', value: 'Full-time & freelance' },
+];
+
+const stats = [
+  { value: 2, suffix: '+', label: 'Years of experience' },
+  { value: 15, suffix: '+', label: 'Projects shipped' },
+  { value: 20, suffix: '+', label: 'Technologies' },
+  { value: 4, suffix: '', label: 'Professional roles' },
+];
+
+const services = [
+  {
+    icon: SwatchIcon,
+    title: 'Frontend engineering',
+    body: 'Accessible, responsive interfaces with React, Next.js and Tailwind CSS.',
+  },
+  {
+    icon: ServerStackIcon,
+    title: 'Backend & APIs',
+    body: 'Reliable REST services with Node, FastAPI and .NET Core, backed by SQL/NoSQL.',
+  },
+  {
+    icon: CodeBracketIcon,
+    title: 'End-to-end delivery',
+    body: 'From architecture and code reviews to deployment in Agile teams.',
+  },
+];
+
+const achievements = ["Dean's List", 'Programming Excellence Award', 'AI-powered final-year project'];
 
 const About: React.FC = () => {
-  const experiences = [
-    {
-      title: "Full Stack Web Developer",
-      company: "inoTech Solutions",
-      location: "Rawalpindi, Pakistan",
-      period: "Nov 2025 – Present",
-      highlights: [
-        "Co-leading frontend development of CyberRange — an enterprise cybersecurity training platform — using React.js and Next.js, improving UI responsiveness and reducing page load times.",
-        "Built and shipped 10+ dynamic UI components with Tailwind CSS, enhancing accessibility and overall user experience across the platform.",
-        "Conducted regular code reviews, enforcing clean code standards and reducing bug density across the codebase.",
-        "Collaborated with backend engineers to integrate FastAPI REST endpoints into the frontend, streamlining data flows for challenge orchestration and scoring.",
-      ],
-      skills: ["React.js", "Next.js", "Tailwind CSS", "FastAPI", "Code Reviews"],
-      icon: <BriefcaseIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-cyan-500 to-blue-600",
-    },
-    {
-      title: "Software Engineer",
-      company: "Komatsu Pakistan Soft",
-      location: "Rawalpindi, Pakistan",
-      period: "Jul 2025 – Oct 2025",
-      highlights: [
-        "Developed and maintained enterprise-level web applications using .NET Core, C#, Entity Framework Core, and Angular, supporting 500+ internal users.",
-        "Designed and implemented scalable RESTful APIs to support Angular frontend, reducing average API response time by ~30% through query optimization.",
-        "Built responsive Angular UI components, improving accessibility scores and reducing user-reported UI issues.",
-        "Participated in full SDLC: requirement analysis, architecture design, sprint planning, and deployment in an Agile team.",
-        "Optimized SQL Server queries and data models, cutting report generation time significantly on high-volume datasets.",
-      ],
-      skills: [".NET Core", "C#", "EF Core", "Angular", "SQL Server"],
-      icon: <CodeBracketIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-violet-500 to-purple-600",
-    },
-    {
-      title: "Developer",
-      company: "Meta-Dao",
-      location: "Remote",
-      period: "July 2024 - Jan 2025",
-      highlights: [
-        "Built decentralized applications and contributed to blockchain ecosystem development with modern web technologies.",
-        "Developed backend systems using .NET, implemented RESTful APIs, and designed scalable database architectures.",
-        "Worked in an Agile environment delivering production-ready features with strong quality standards.",
-      ],
-      skills: [".Net", "Blazor Framework", "MVC", "SSMS", "Swagger"],
-      icon: <CodeBracketIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-pink-500 to-violet-600",
-    },
-    {
-      title: "Research Assistant",
-      company: "HEC (Higher Education Commission)",
-      location: "Pakistan",
-      period: "Aug 2023 - June 2024",
-      highlights: [
-        "Led educational technology R&D initiatives, contributing to innovative learning solutions.",
-        "Worked on machine learning applications for human pose estimation and educational data analysis.",
-        "Collaborated with academic teams on research publications and conference presentations.",
-      ],
-      skills: ["Research", "Data Analysis", "Educational Technology", "Academic Writing", "Machine Learning"],
-      icon: <AcademicCapIcon className="h-6 w-6 dark:text-white" />,
-      gradient: "from-emerald-500 to-teal-600",
-    },
-  ];
-
-  const education = [
-    {
-      degree: "Bachelor's in Computer Science",
-      institution: "University of Engineering & Technology (UET Taxila)",
-      period: "2020 - 2024",
-      gpa: "3.57/4.0",
-      achievements: ["Dean's List", "Programming Excellence Award", "Final Year Project: AI-Powered System"],
-      icon: <AcademicCapIcon className="h-6 w-6 dark:text-white" />,
-    }
-  ];
-
-  const stats = [
-    { label: "Years Experience", value: "2+", icon: CalendarIcon, gradient: "from-cyan-500 to-blue-600" },
-    { label: "Projects Completed", value: "15+", icon: CodeBracketIcon, gradient: "from-purple-500 to-pink-600" },
-    { label: "Technologies", value: "20+", icon: SparklesIcon, gradient: "from-emerald-500 to-teal-600" },
-    { label: "Happy Clients", value: "50+", icon: AcademicCapIcon, gradient: "from-orange-500 to-red-600" },
-  ];
-
   return (
-    <section id="about" className="relative py-32 bg-black overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-purple-900/20 to-indigo-900/30"></div>
-        
-        {/* Static blobs (animation removed for performance) */}
-        <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-500/25 to-blue-600/25 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-purple-500/25 to-pink-600/25 rounded-full blur-3xl" />
-      </div>
+    <section id="about" className="relative border-t border-line py-24 sm:py-32">
+      <div className="container">
+        <SectionHeading
+          index="01"
+          eyebrow="About"
+          title="Engineer, problem-solver, builder."
+          description="I care about the details that make software feel fast, clear and dependable — and about shipping work that holds up in production."
+        />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-24">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-3 mb-8"
-            >
-              <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-500/50">
-                <SparklesIcon className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                About Me
-              </h2>
-            </motion.div>
-            <motion.p 
-              className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              Passionate innovator crafting digital experiences that bridge cutting-edge technology with real-world impact
-            </motion.p>
-          </div>
+        <div className="mt-16 grid gap-12 lg:grid-cols-12">
+          {/* Bio + facts */}
+          <div className="lg:col-span-7">
+            <Reveal className="space-y-5 text-base sm:text-lg leading-relaxed text-[var(--muted)]">
+              <p>
+                I&apos;m a full-stack developer with a strong foundation in modern web technologies.
+                My work spans the entire stack — crafting intuitive interfaces with React and Next.js,
+                and building robust services with Node, FastAPI and .NET Core.
+              </p>
+              <p>
+                I&apos;m currently co-leading frontend development of{' '}
+                <span className="text-[var(--text)]">CyberRange</span>, an enterprise cybersecurity
+                training platform, where I focus on responsive UI, accessibility and clean,
+                review-driven code.
+              </p>
+            </Reveal>
 
-          {/* Main Content - Split Layout */}
-          <div className="grid lg:grid-cols-2 gap-16 items-start mb-24">
-            {/* Left Side - Image with Stats */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              {/* Profile Image Card */}
-              <motion.div
-                className="relative group mb-8"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="absolute -inset-8 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
-                
-                <div className="relative">
-                  <div className="aspect-square rounded-3xl overflow-hidden border-4 border-white/10 shadow-2xl shadow-purple-500/30 group-hover:shadow-purple-400/50 transition-all duration-500 bg-gradient-to-br from-violet-900/20 to-purple-900/20 backdrop-blur-xl">
-                    <Image
-                      src="/images/about-photo.jpg"
-                      alt="Ahmed Asim Zaman"
-                      width={500}
-                      height={500}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+hBOEdDCdMNvh/wg9v"
-                    />
-                  </div>
+            <Reveal as="dl" delay={120} className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
+              {facts.map((f) => (
+                <div key={f.label} className="bg-surface p-5">
+                  <dt className="eyebrow">{f.label}</dt>
+                  <dd className="mt-2 text-sm font-medium text-white">{f.value}</dd>
                 </div>
-              </motion.div>
+              ))}
+            </Reveal>
 
-              {/* Stats Cards */}
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                  >
-                    <Card className={`p-6 bg-gradient-to-br ${stat.gradient} bg-opacity-10 border-${stat.gradient.split('-')[1]}-500/30`}>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className={`p-2 bg-gradient-to-r ${stat.gradient} rounded-lg bg-opacity-20`}>
-                          <stat.icon className={`w-6 h-6 bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`} />
-                        </div>
-                        <div>
-                          <div className="text-3xl font-black text-white">{stat.value}</div>
-                          <div className="text-xs text-gray-300 font-medium">{stat.label}</div>
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right Side - Bio and Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              {/* Name and Title */}
-              <div>
-                <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent mb-4">
-                  Ahmed Asim Zaman
-                </h3>
-                <p className="text-2xl text-violet-400 font-semibold mb-6">
-                  Full Stack Developer & Innovation Enthusiast
-                </p>
-              </div>
-
-              {/* Bio */}
-              <div className="space-y-4 text-gray-300 leading-relaxed text-lg">
-                <p>
-                  I'm a passionate full-stack developer with a strong foundation in modern web technologies. 
-                  My journey in tech is driven by a desire to create meaningful digital experiences that solve real-world problems.
-                </p>
-                <p>
-                  Currently working as a Research Assistant at HEC and contributing to Meta-Dao projects, I bring both 
-                  academic rigor and practical development experience to every project I undertake.
-                </p>
-                <p>
-                  My expertise spans the entire development stack, from crafting intuitive user interfaces with React and Next.js 
-                  to building robust backend systems with Node.js and MongoDB. I'm particularly passionate about creating 
-                  applications that make a positive impact on communities.
-                </p>
-              </div>
-
-              {/* Location and Experience Info */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-5 bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border-cyan-500/20 hover:border-cyan-400/50 transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-cyan-500/20 rounded-xl">
-                      <MapPinIcon className="w-6 h-6 text-cyan-400" />
-                    </div>
-                    <div>
-                      <div className="text-cyan-400 font-semibold text-sm">Location</div>
-                      <div className="text-white font-medium">Islamabad, Pakistan</div>
-                    </div>
-                  </div>
-                </Card>
-                
-                <Card className="p-5 bg-gradient-to-r from-purple-900/30 to-pink-900/30 border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-500/20 rounded-xl">
-                      <CalendarIcon className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <div>
-                      <div className="text-purple-400 font-semibold text-sm">Experience</div>
-                      <div className="text-white font-medium">2+ Years</div>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-
-            </motion.div>
-          </div>
-
-          {/* Experience Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="mb-24"
-          >
-            <h3 className="text-4xl font-bold text-center bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent mb-16">
-              Professional Experience
-            </h3>
-            
-            <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 + index * 0.2 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.02, y: -5 }}
+            {/* Services */}
+            <div className="mt-10 space-y-3">
+              {services.map((s, i) => (
+                <Reveal
+                  key={s.title}
+                  delay={i * 80}
+                  className="group flex items-start gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-[var(--line-strong)]"
                 >
-                  <Card className="h-full hover:border-violet-500/50 transition-all duration-500">
-                    <div className="flex items-start gap-4 mb-5">
-                      <CardSkeletonContainer>
-                        <Skeleton>{exp.icon}</Skeleton>
-                      </CardSkeletonContainer>
-
-                      <div className="min-w-0 flex-1">
-                        <CardTitle className="text-xl mb-1">{exp.title}</CardTitle>
-                        <CardDescription
-                          className={`text-base font-semibold bg-gradient-to-r ${exp.gradient} bg-clip-text text-transparent`}
-                        >
-                          {exp.company}
-                        </CardDescription>
-
-                        <div className="mt-3 flex flex-wrap items-center gap-2">
-                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200">
-                            <MapPinIcon className="w-4 h-4 text-gray-300" />
-                            {exp.location}
-                          </span>
-                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200">
-                            <CalendarIcon className="w-4 h-4 text-gray-300" />
-                            {exp.period}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <ul className="space-y-3 mb-6">
-                      {exp.highlights.map((item, itemIndex) => (
-                        <li key={itemIndex} className="flex gap-3">
-                          <span
-                            className={`mt-2 h-2 w-2 rounded-full bg-gradient-to-r ${exp.gradient} flex-shrink-0`}
-                          />
-                          <p className="text-gray-300 text-sm leading-relaxed">{item}</p>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-wrap gap-2">
-                      {exp.skills.map((skill, skillIndex) => (
-                        <span
-                          key={skillIndex}
-                          className={`px-3 py-1.5 bg-gradient-to-r ${exp.gradient} bg-opacity-20 border border-white/10 text-white text-xs rounded-full backdrop-blur-xl font-medium`}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </Card>
-                </motion.div>
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line bg-surface-2 text-accent-soft">
+                    <s.icon className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-white">{s.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">{s.body}</p>
+                  </div>
+                </Reveal>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Education Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto"
-          >
-            <h3 className="text-4xl font-bold text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-16">
-              Education
-            </h3>
-            
-            {education.map((edu, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <Card className="hover:border-cyan-500/50 transition-all duration-500">
-                  <CardSkeletonContainer>
-                    <Skeleton>
-                      {edu.icon}
-                    </Skeleton>
-                  </CardSkeletonContainer>
-                  <CardTitle className="text-xl mb-2">{edu.degree}</CardTitle>
-                  <CardDescription className="text-base font-semibold text-cyan-400 mb-2">
-                    {edu.institution}
-                  </CardDescription>
-                  <CardDescription className="text-gray-400 text-sm mb-6">
-                    {edu.period} • GPA: {edu.gpa}
-                  </CardDescription>
-                  <div className="space-y-3">
-                    {edu.achievements.map((achievement, achIndex) => (
-                      <div key={achIndex} className="flex items-center gap-3 p-3 bg-gradient-to-r from-cyan-900/20 to-blue-900/20 rounded-lg border border-cyan-500/20">
-                        <div className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex-shrink-0"></div>
-                        <span className="text-gray-300 text-sm font-medium">{achievement}</span>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+          {/* Photo + education */}
+          <div className="lg:col-span-5">
+            <Reveal className="overflow-hidden rounded-2xl border border-line bg-surface">
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src="/images/about-photo.jpg"
+                  alt="Ahmed Asim Zaman"
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 420px"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+
+            <Reveal delay={120} className="mt-6 rounded-2xl border border-line bg-surface p-6">
+              <div className="flex items-center gap-3">
+                <span className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-surface-2 text-accent-soft">
+                  <AcademicCapIcon className="h-5 w-5" />
+                </span>
+                <div>
+                  <h3 className="text-[15px] font-semibold text-white">B.S. Computer Science</h3>
+                  <p className="text-sm text-[var(--muted)]">UET Taxila · 2020–2024</p>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center justify-between rounded-xl border border-line bg-surface-2 px-4 py-3">
+                <span className="text-sm text-[var(--muted)]">Final GPA</span>
+                <span className="font-mono text-sm font-medium text-white">3.57 / 4.0</span>
+              </div>
+              <ul className="mt-4 space-y-2">
+                {achievements.map((a) => (
+                  <li key={a} className="flex items-center gap-2.5 text-sm text-[var(--muted)]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-4">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 80} className="bg-surface p-6 text-center sm:p-8">
+              <div className="text-4xl font-semibold tracking-tight text-fade sm:text-5xl">
+                <CountUp to={s.value} suffix={s.suffix} />
+              </div>
+              <div className="mt-2 text-xs sm:text-sm text-[var(--muted)]">{s.label}</div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

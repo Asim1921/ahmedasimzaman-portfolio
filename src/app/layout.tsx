@@ -1,15 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PerformanceMonitor from '@/components/ui/PerformanceMonitor';
-// Note: intentionally keep the global background lightweight for smoother UX.
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500'],
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -88,19 +94,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-      </head>
-      <body className={`${inter.className} antialiased bg-black relative overflow-x-hidden`}>
+    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+      <body className="font-sans bg-ink text-[var(--text)] antialiased relative overflow-x-hidden selection:bg-accent/30">
         <PerformanceMonitor />
         <Header />
-        <main className="relative z-10">
-          {children}
-        </main>
+        <main className="relative z-10">{children}</main>
         <Footer />
       </body>
     </html>

@@ -2,197 +2,147 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import MagicButton from '@/components/ui/MagicButton';
-import AnimatedGradientText from '@/components/ui/AnimatedGradientText';
-import { cn } from '@/lib/utils';
+import { ArrowDownIcon, ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import Reveal from '@/components/ui/Reveal';
+import Spotlight from '@/components/ui/Spotlight';
+import Button from '@/components/ui/Button';
+
+const socials = [
+  {
+    name: 'GitHub',
+    href: 'https://github.com/Asim1921',
+    path: 'M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z',
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/asim-zaman-869053175/',
+    path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/Asimzaman190',
+    path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z',
+  },
+];
+
+const techRow = ['Next.js', 'React', 'TypeScript', 'Node.js', '.NET', 'MongoDB'];
 
 const Hero: React.FC = () => {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    aboutSection?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const techStack = [
-    { name: 'Next.js', icon: '▲', color: 'from-gray-900 via-black to-gray-800' },
-    { name: 'React', icon: '⚛', color: 'from-cyan-500 via-blue-500 to-indigo-600' },
-    { name: 'Node.js', icon: '⬢', color: 'from-green-500 via-emerald-500 to-teal-600' },
-    { name: 'MongoDB', icon: '🍃', color: 'from-green-600 via-green-500 to-lime-600' },
-  ];
-
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Enhanced background effects */}
-      <div className="absolute inset-0 z-0">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-950/50 via-purple-950/30 to-indigo-950/50" />
-        
-        {/* Static orbs (animation removed for performance) */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-violet-500/20 to-purple-600/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-indigo-500/20 to-blue-600/20 rounded-full blur-3xl" />
-      </div>
+    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16">
+      {/* Backdrop */}
+      <div aria-hidden className="absolute inset-0 aurora" />
+      <div aria-hidden className="absolute inset-0 bg-grid" />
+      <Spotlight />
 
-      <motion.div 
-        style={{ y, opacity }}
-        className="container mx-auto px-6 relative z-10"
-      >
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[85vh]">
-          
-          {/* Left Side - Profile Image with Modern Design */}
-          <motion.div 
-            className="flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div className="relative group">
-              {/* Animated border glow */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-full blur-2xl opacity-60 group-hover:opacity-100 transition-all duration-500" />
-              
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                {/* Glassmorphic border */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-violet-500/30 via-purple-500/30 to-indigo-500/30 rounded-full backdrop-blur-xl border border-white/10 p-1">
-                  <div className="w-full h-full bg-black/50 rounded-full" />
-                </div>
-                
-                {/* Profile Image */}
-                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 shadow-2xl group-hover:border-purple-500/50 transition-all duration-500">
+      <div className="container relative z-10">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+          {/* Content */}
+          <div className="lg:col-span-7">
+            <Reveal className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-3 py-1.5 backdrop-blur">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/70 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <span className="text-xs font-medium text-[var(--muted)]">Available for new projects</span>
+            </Reveal>
+
+            <Reveal as="h1" delay={80} className="mt-6 text-balance text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[0.98] tracking-tightest text-fade">
+              Ahmed Asim Zaman
+            </Reveal>
+
+            <Reveal as="p" delay={140} className="mt-4 text-xl sm:text-2xl font-medium text-accent-gradient w-fit">
+              Full-Stack Engineer
+            </Reveal>
+
+            <Reveal as="p" delay={200} className="mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-[var(--muted)]">
+              I design and build performant web applications end to end — from React &amp; Next.js
+              interfaces to Node and .NET services. Currently shaping{' '}
+              <span className="text-[var(--text)]">CyberRange</span> at inoTech Solutions.
+            </Reveal>
+
+            <Reveal delay={260} className="mt-9 flex flex-wrap items-center gap-3">
+              <Button href="#projects" variant="primary" size="lg">
+                View work
+                <ArrowDownIcon className="h-4 w-4" />
+              </Button>
+              <Button href="#contact" variant="secondary" size="lg">
+                Get in touch
+              </Button>
+            </Reveal>
+
+            <Reveal delay={320} className="mt-9 flex items-center gap-5">
+              <div className="flex items-center gap-2">
+                {socials.map((s) => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.name}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-line text-[var(--muted)] transition-colors hover:border-[var(--line-strong)] hover:text-white"
+                  >
+                    <svg className="h-[18px] w-[18px]" fill="currentColor" viewBox="0 0 24 24">
+                      <path d={s.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+              <div className="h-6 w-px bg-line" />
+              <p className="text-sm text-[var(--faint)]">Islamabad, Pakistan</p>
+            </Reveal>
+          </div>
+
+          {/* Portrait */}
+          <div className="lg:col-span-5">
+            <Reveal delay={160} className="relative mx-auto w-full max-w-sm">
+              {/* soft accent ring (static, no neon) */}
+              <div
+                aria-hidden
+                className="absolute -inset-px rounded-[28px] bg-gradient-to-b from-accent/30 via-transparent to-transparent"
+              />
+              <div className="relative overflow-hidden rounded-[28px] border border-line bg-surface">
+                <div className="relative aspect-[4/5]">
                   <Image
                     src="/images/1768992951974.jfif"
                     alt="Ahmed Asim Zaman"
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                     priority
+                    sizes="(max-width: 1024px) 90vw, 420px"
+                    className="object-cover"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
+                </div>
+
+                {/* caption bar */}
+                <div className="flex items-center justify-between gap-3 border-t border-line px-5 py-4">
+                  <div>
+                    <p className="text-sm font-medium text-white">Building digital products</p>
+                    <p className="text-xs text-[var(--faint)]">since 2023</p>
+                  </div>
+                  <a
+                    href="#contact"
+                    className="grid h-9 w-9 place-items-center rounded-full bg-white text-ink transition-transform hover:-translate-y-0.5"
+                    aria-label="Get in touch"
+                  >
+                    <ArrowUpRightIcon className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Right Side - Content */}
-          <motion.div 
-            className="text-center lg:text-left space-y-6"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          >
-            {/* Animated Gradient Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <AnimatedGradientText>
-                Full Stack Developer
-              </AnimatedGradientText>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-black mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              <span className="block bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                Ahmed Asim
-              </span>
-              <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mt-2">
-                Zaman
-              </span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p 
-              className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.7 }}
-            >
-              Crafting the future of web with cutting-edge technologies. From{' '}
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text font-semibold">EventEase</span> to{' '}
-              <span className="text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text font-semibold">VolunteerMe</span>, 
-              I build digital experiences that push boundaries and create impact.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.9 }}
-            >
-              <Link href="#projects">
-                <MagicButton>
-                  Explore My Work
-                  <ChevronDownIcon className="w-5 h-5 ml-2 inline" />
-                </MagicButton>
-              </Link>
-            </motion.div>
-
-            {/* Tech Stack Icons */}
-            <motion.div 
-              className="grid grid-cols-4 gap-4 max-w-md mx-auto lg:mx-0 pt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.1 }}
-            >
-              {techStack.map((tech, index) => (
-                <motion.div
-                  key={tech.name}
-                  className="group relative"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                >
-                  <div className={cn(
-                    "relative p-4 bg-gradient-to-br rounded-xl shadow-xl border border-white/10 backdrop-blur-xl transition-all duration-500",
-                    tech.color
-                  )}>
-                    <div className="text-center mb-1">
-                      <span className="text-2xl font-bold text-white drop-shadow-lg">
-                        {tech.icon}
-                      </span>
-                    </div>
-                    <div className="text-center">
-                      <span className="text-xs font-semibold text-white/90">
-                        {tech.name}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
+            </Reveal>
+          </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div 
-          className="flex flex-col items-center gap-4 mt-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-        >
-          <span className="text-gray-400 text-sm font-medium tracking-wider uppercase">
-            Scroll to explore
-          </span>
-          <motion.button 
-            onClick={scrollToAbout}
-            className="p-3 bg-white/5 backdrop-blur-xl rounded-full border border-white/10 text-white hover:bg-white/10 transition-all duration-500 shadow-xl group"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronDownIcon className="w-6 h-6 group-hover:text-violet-400 transition-colors duration-300" />
-          </motion.button>
-        </motion.div>
-      </motion.div>
+        {/* tech row */}
+        <Reveal delay={380} className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6">
+          <span className="eyebrow">Core stack</span>
+          {techRow.map((t) => (
+            <span key={t} className="font-mono text-sm text-[var(--muted)]">
+              {t}
+            </span>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 };

@@ -1,195 +1,159 @@
 'use client';
 
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import Image from 'next/image';
-import { RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+import Reveal from '@/components/ui/Reveal';
+import SectionHeading from '@/components/ui/SectionHeading';
+
+type Project = {
+  title: string;
+  category: string;
+  description: string;
+  technologies: string[];
+  imageUrl: string;
+  featured?: boolean;
+};
+
+const projects: Project[] = [
+  {
+    title: 'EventEase',
+    category: 'Event Management',
+    description:
+      'A comprehensive event-management platform that simplifies planning, registration and coordination, with automated notifications and integrated payments built on a microservices architecture.',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Stripe', 'Socket.io'],
+    imageUrl: '/images/projects/EaseUsPlatform.png',
+    featured: true,
+  },
+  {
+    title: 'Clickgoffer',
+    category: 'Local Commerce',
+    description:
+      'A full-stack platform for local commerce that replaces full-prepayment vouchers with a split-payment reservation model — reserve with a deposit, pay the balance later.',
+    technologies: ['React', 'TypeScript', 'MongoDB', 'Node.js'],
+    imageUrl: '/images/projects/Clickgoffer.jpeg',
+  },
+  {
+    title: 'Vibely',
+    category: 'Backend API',
+    description:
+      'A full-featured social-media backend with JWT auth, posts, comments, likes, file uploads and email services, wrapped in security and validation middleware.',
+    technologies: ['Node.js', 'Express', 'MongoDB', 'JWT', 'Cloudinary'],
+    imageUrl: '/images/projects/social-media.png',
+  },
+  {
+    title: 'CRM System',
+    category: 'Enterprise',
+    description:
+      'An enterprise CRM with lead management, sales-pipeline tracking, customer analytics, automated workflows and real-time reporting dashboards.',
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'Redis', 'Chart.js'],
+    imageUrl: '/images/projects/Communication.png',
+  },
+  {
+    title: 'Portfolio',
+    category: 'Web App',
+    description:
+      'This very site — built with Next.js 14 and Tailwind, focused on a refined, performant, accessible reading experience.',
+    technologies: ['Next.js 14', 'TypeScript', 'Tailwind CSS'],
+    imageUrl: '/images/projects/portfolio.png',
+  },
+];
+
+function TechTags({ items, max = 5 }: { items: string[]; max?: number }) {
+  const shown = items.slice(0, max);
+  const rest = items.length - shown.length;
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {shown.map((t) => (
+        <span key={t} className="rounded-md border border-line bg-surface-2 px-2 py-1 font-mono text-[11px] text-[var(--muted)]">
+          {t}
+        </span>
+      ))}
+      {rest > 0 && (
+        <span className="rounded-md border border-line bg-surface-2 px-2 py-1 font-mono text-[11px] text-[var(--faint)]">
+          +{rest}
+        </span>
+      )}
+    </div>
+  );
+}
 
 const Projects: React.FC = () => {
-  const projects = useMemo(() => [
-    {
-      id: 1,
-      category: "Event Management",
-      title: "EventEase",
-      description: "A comprehensive event management platform that simplifies event planning, registration, and coordination with real-time updates.",
-      longDescription: "EventEase revolutionizes event management with AI-powered scheduling, automated notifications, and seamless payment integration. Built with modern microservices architecture.",
-      technologies: ["React", "Node.js", "MongoDB", "Express", "Stripe API", "Socket.io"],
-      imageUrl: "/images/projects/EaseUsPlatform.png",
-      featured: true,
-      status: "completed",
-      gradient: "from-violet-500 via-purple-600 to-indigo-700",
-    },
-    {
-      id: 2,
-      category: "Local Commerce",
-      title: "Clickgoffer",
-      description:
-        "A fullstack web platform for local commerce that replaces conventional full prepayment vouchers with a split-payment reservation model.",
-      longDescription:
-        "Clickgoffer is a fullstack platform for local commerce that replaces conventional full prepayment vouchers with a split-payment reservation model — reserve with a small deposit and pay the remaining balance later.",
-      technologies: ["React", "TypeScript", "MongoDB", "Node.js"],
-      imageUrl: "/images/projects/Clickgoffer.jpeg",
-      featured: true,
-      status: "completed",
-      gradient: "from-amber-500 via-orange-600 to-rose-700",
-    },
-    {
-      id: 4,
-      category: "Web Application",
-      title: "Portfolio Website",
-      description: "This very website! Built with Next.js 14, featuring modern design and optimal performance with cutting-edge animations.",
-      longDescription: "A showcase of modern web development featuring glassmorphism, advanced animations, and performance optimization. Built as a template for developers.",
-      technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MongoDB"],
-      imageUrl: "/images/projects/portfolio.png",
-      featured: false,
-      status: "completed",
-      gradient: "from-blue-500 via-indigo-600 to-purple-700",
-    },
-    {
-      id: 5,
-      category: "Backend API",
-      title: "Vibely",
-      description: "A comprehensive REST API for a social media platform with authentication, posts, comments, likes, and real-time features.",
-      longDescription: "A full-featured social media backend built with Node.js and Express, featuring JWT authentication, MongoDB integration, file uploads, email services, and comprehensive middleware for security and validation.",
-      technologies: ["Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "Bcrypt", "Nodemailer", "Cloudinary"],
-      imageUrl: "/images/projects/social-media.png",
-      featured: true,
-      status: "completed",
-      gradient: "from-green-500 via-emerald-600 to-teal-700",
-    },
-    {
-      id: 6,
-      category: "CRM System",
-      title: "CRM System",
-      description: "A comprehensive Customer Relationship Management system with advanced analytics, automation, and multi-channel communication.",
-      longDescription: "Enterprise-grade CRM system featuring lead management, sales pipeline tracking, customer analytics, automated workflows, email marketing integration, and real-time reporting dashboards.",
-      technologies: ["React", "Node.js", "PostgreSQL", "Redis", "Socket.io", "Chart.js", "SendGrid", "AWS S3"],
-      imageUrl: "/images/projects/communication.png",
-      featured: true,
-      status: "completed",
-      gradient: "from-orange-500 via-red-600 to-pink-700",
-    },
-  ], []);
+  const featured = projects.find((p) => p.featured) ?? projects[0];
+  const rest = projects.filter((p) => p !== featured);
 
   return (
-    <section id="projects" className="relative py-32 bg-black overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-900/20 via-purple-900/10 to-indigo-900/20"></div>
-      </div>
+    <section id="projects" className="relative border-t border-line py-24 sm:py-32">
+      <div className="container">
+        <SectionHeading
+          index="03"
+          eyebrow="Selected work"
+          title="Things I've built."
+          description="A few projects that show how I approach product engineering, from interface to API."
+        />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-3 mb-8"
+        {/* Featured */}
+        <Reveal className="group mt-16 grid overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-[var(--line-strong)] lg:grid-cols-2">
+          <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[380px]">
+            <Image
+              src={featured.imageUrl}
+              alt={featured.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 560px"
+              className="object-cover transition-transform duration-700 ease-smooth group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface/90 via-surface/10 to-transparent lg:bg-gradient-to-r" />
+          </div>
+
+          <div className="flex flex-col justify-center gap-5 p-8 lg:p-10">
+            <div className="flex items-center gap-3">
+              <span className="rounded-full border border-accent/40 bg-accent/10 px-2.5 py-1 text-[11px] font-medium text-accent-soft">
+                Featured
+              </span>
+              <span className="eyebrow">{featured.category}</span>
+            </div>
+            <h3 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">{featured.title}</h3>
+            <p className="max-w-prose text-[var(--muted)] leading-relaxed">{featured.description}</p>
+            <TechTags items={featured.technologies} max={6} />
+          </div>
+        </Reveal>
+
+        {/* Grid */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          {rest.map((p, i) => (
+            <Reveal
+              as="article"
+              key={p.title}
+              delay={i * 70}
+              className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface transition-colors hover:border-[var(--line-strong)]"
             >
-              <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-purple-500/50">
-                <RocketLaunchIcon className="w-6 h-6 text-white" />
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <Image
+                  src={p.imageUrl}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-smooth group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 rounded-full border border-line bg-ink/60 px-2.5 py-1 text-[11px] text-[var(--muted)] backdrop-blur">
+                  {p.category}
+                </span>
               </div>
-              <h2 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-                Featured Projects
-              </h2>
-            </motion.div>
-            <motion.p
-              className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              A showcase of innovative applications built to solve real-world problems and create meaningful digital impact
-            </motion.p>
-          </div>
 
-          {/* Projects Grid (lighter + faster than carousel) */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, idx) => (
-              <motion.article
-                key={project.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: Math.min(idx * 0.05, 0.25) }}
-                viewport={{ once: true }}
-                className="group relative rounded-3xl border border-white/10 bg-black/30 backdrop-blur-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
-              >
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${project.gradient} blur-2xl`} />
-
-                <div className="relative">
-                  <div className="relative h-56 overflow-hidden">
-                    <Image
-                      src={project.imageUrl}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
-
-                    <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                      <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/50 border border-white/15 text-gray-100 backdrop-blur-xl">
-                        {project.category}
-                      </span>
-                      {project.featured && (
-                        <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/10 border border-white/15 text-white backdrop-blur-xl">
-                          Featured
-                        </span>
-                      )}
-                      <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10 text-gray-200 backdrop-blur-xl">
-                        {project.status}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-5">
-                      {project.description}
-                    </p>
-
-                    <details className="group/details">
-                      <summary className="cursor-pointer select-none text-sm font-semibold text-violet-300 hover:text-violet-200 transition-colors">
-                        More details
-                      </summary>
-                      <p className="mt-3 text-sm text-gray-300 leading-relaxed">
-                        {project.longDescription}
-                      </p>
-                    </details>
-
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 6).map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-200"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 6 && (
-                        <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-gray-400">
-                          +{project.technologies.length - 6} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
+              <div className="flex flex-1 flex-col gap-4 p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-semibold text-white">{p.title}</h3>
+                  <ArrowUpRightIcon className="h-5 w-5 shrink-0 text-[var(--faint)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
                 </div>
-              </motion.article>
-            ))}
-          </div>
-        </motion.div>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">{p.description}</p>
+                <div className="mt-auto pt-1">
+                  <TechTags items={p.technologies} />
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -41,25 +41,10 @@ const nextConfig = {
 
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            enforce: true,
-          },
-        },
-      };
-    }
+    // NOTE: We intentionally do NOT override `optimization.splitChunks` here.
+    // Next.js' default chunking keeps route-specific libraries (e.g.
+    // framer-motion, only used by /blog) out of the shared chunk, so the
+    // homepage no longer pays for code it doesn't use.
 
     // Optimize images
     config.module.rules.push({
